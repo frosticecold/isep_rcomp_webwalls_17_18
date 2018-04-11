@@ -38,3 +38,8 @@ web frontend, JavaScript will also be required.
 * [Rui Ribeiro](1150344@isep.ipp.pt)
 * [Mário Dias](1151708@isep.ipp.pt)
 * [Miguel Santos](1161386@isep.ipp.pt)
+
+### Assigned Ports ###
+GRUPO 1
+Port:32021
+Port:32022
