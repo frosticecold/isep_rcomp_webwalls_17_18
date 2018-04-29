@@ -3,8 +3,6 @@ package application;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -17,7 +15,9 @@ public class Settings {
 
     public static final String[] PROPERTIES_KEYWORDS = {"udp_port", "tcp_port"};
 
-    private static final Map<String, String> settings_map = new HashMap<>();
+    public static int UDP_PORT;
+    public static int TCP_PORT;
+    public static final int DATAGRAM_SIZE = 256;
 
     public Settings() throws IOException {
         loadSettings();
@@ -33,14 +33,8 @@ public class Settings {
         } else {
             throw new FileNotFoundException("Config property file not found.");
         }
-        for (String s : PROPERTIES_KEYWORDS) {
-            String input = prop.getProperty(s);
-            settings_map.put(s, input);
-        }
-    }
-
-    public final String getProperty(final String prop) {
-        return settings_map.get(prop);
+        UDP_PORT = Integer.parseInt(prop.getProperty(PROPERTIES_KEYWORDS[0]));
+        TCP_PORT = Integer.parseInt(prop.getProperty(PROPERTIES_KEYWORDS[1]));
     }
 
 }
