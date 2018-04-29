@@ -42,9 +42,9 @@ public class UDPClient implements Runnable {
             String frase;
             DatagramSocket sock = new DatagramSocket();
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
-            
+
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            
+
             while (true) {
                 System.out.print("Sentence to send (\"exit\" to quit): ");
                 frase = in.readLine();
@@ -66,5 +66,9 @@ public class UDPClient implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String getServerIP() {
+        return serverIP.getHostAddress();
     }
 }
