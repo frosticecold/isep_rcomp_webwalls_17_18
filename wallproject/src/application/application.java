@@ -5,19 +5,27 @@
  */
 package application;
 
+import java.io.IOException;
+
 /**
  *
  * @author Raúl Correia
  */
 public class application {
 
-    /**
-     * @param args the command line arguments
-     */
+    public static Settings set;
+
     public static void main(String[] args) {
-        if(args.length == 0)
+        if (args.length == 0) {
             System.out.println("Error: no parameters.");
-        
+        }
+
+        try {
+            set = new Settings();
+        } catch (IOException ex) {
+            System.out.println("Error: couldn't load settings");
+        }
+
     }
-    
+
 }
