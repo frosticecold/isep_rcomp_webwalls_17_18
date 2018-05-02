@@ -86,11 +86,16 @@ public class WallManager {
      * @param nameOfWall
      * @return
      */
-    public synchronized boolean findOrCreateWall(final String nameOfWall) {
+    private synchronized Wall findOrCreateWall(final String nameOfWall) {
+        Wall w;
         if (!mapOfWalls.containsKey(nameOfWall)) {
-            mapOfWalls.put(nameOfWall, new Wall());
+            w = new Wall();
+            mapOfWalls.put(nameOfWall, w);
+        } else {
+            w = mapOfWalls.get(nameOfWall);
         }
-        return true;
+
+        return w;
     }
 
     /**
@@ -100,10 +105,8 @@ public class WallManager {
      * @return
      */
     public synchronized String getWallInformation(final String nameOfWall) {
-        if (mapOfWalls.containsKey(nameOfWall)) {
-            return mapOfWalls.get(nameOfWall).wallContent();
-        }
-        return "<noinfo>";
+        Wall w =findOrCreateWall(nameOfWall);
+        return w.wallContent();
     }
 
     /**
