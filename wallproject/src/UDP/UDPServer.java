@@ -30,12 +30,11 @@ public class UDPServer implements Runnable {
         }
 
     }
-
     @Override
     public void run() {
         System.out.println("Listening for UDP requests (IPv6/IPv4). Use CTRL+C to terminate the server.");
-        byte[] buffer = new byte[Settings.DATAGRAM_SIZE];
-        byte[] response = new byte[Settings.DATAGRAM_SIZE];
+        byte[] buffer = new byte[Settings.UDP_PACKET_SIZE];
+        byte[] response = new byte[Settings.UDP_PACKET_SIZE];
         int packet_length;
         /**
          * Buffer *
@@ -49,6 +48,10 @@ public class UDPServer implements Runnable {
                 udpPacket.setData(buffer);
                 udpPacket.setLength(buffer.length);
                 socket.receive(udpPacket);
+                
+                /**
+                 * Interpretar
+                 */
                 /**
                  * get answer length *
                  */
@@ -59,6 +62,10 @@ public class UDPServer implements Runnable {
                 /**
                  * send answer *
                  */
+                boolean finished = false;
+                do{
+                   
+                }while(!finished);
                 udpPacket.setData(s.getBytes());
                 udpPacket.setLength(s.getBytes().length);
                 socket.send(udpPacket);
