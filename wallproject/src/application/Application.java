@@ -6,6 +6,7 @@
 package application;
 
 import GUI.GUIClient;
+import HTTP.HTTPServer;
 import UDP.UDPClient;
 import UDP.UDPServer;
 import java.io.IOException;
@@ -19,6 +20,8 @@ import java.util.logging.Logger;
 public class Application {
     
     public static Settings settings;
+    public static HTTPServer http_server;
+    public static Thread http_thread;
     public static UDPServer udp_server;
     public static Thread udp_thread;
     
@@ -49,9 +52,13 @@ public class Application {
         }
         if (args.length > 0) {
             if (args[0].compareToIgnoreCase("server") == 0) {
+                http_server = new HTTPServer();
+                http_thread = new Thread(http_server);
                 udp_server = new UDPServer();
                 udp_thread = new Thread(udp_server);
                 System.out.println("Running UDPServer thread on port: " + Settings.UDP_PORT);
+                System.out.println("Running HTTPServer thread on port: " + Settings.TCP_PORT);
+                http_thread.start();
                 udp_thread.start();
             } else {
                 if (args.length >= 1) {
