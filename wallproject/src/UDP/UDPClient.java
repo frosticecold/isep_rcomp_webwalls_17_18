@@ -13,7 +13,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,15 +26,23 @@ import java.util.logging.Logger;
 public class UDPClient implements Runnable {
 
     private static InetAddress serverIP;
+    private static volatile boolean execute = true;
+    private static DatagramSocket sock;
+
+    private Semaphore semSocket = new Semaphore(1, true);
+    private static final int SOCKET_TIMEOUT = 2000;
 
     public UDPClient(String ip) {
         try {
             serverIP = InetAddress.getByName(ip);
+            sock = new DatagramSocket();
+            sock.setSoTimeout(SOCKET_TIMEOUT);
         } catch (UnknownHostException ex) {
             System.out.println("Invalid server address supplied: " + ip);
             System.exit(1);
+        } catch (SocketException ex) {
+            Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
@@ -40,29 +50,18 @@ public class UDPClient implements Runnable {
         try {
             byte[] data = new byte[300];
             String frase;
-            DatagramSocket sock = new DatagramSocket();
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-            while (true) {
-                System.out.print("Sentence to send (\"exit\" to quit): ");
-                frase = in.readLine();
-                if (frase.compareTo("exit") == 0) {
-                    break;
-                }
-                udpPacket.setData(frase.getBytes());
-                udpPacket.setLength(frase.length());
-                sock.send(udpPacket);
-                udpPacket.setData(data);
-                udpPacket.setLength(data.length);
+            while (execute) {
+                System.out.println("Getting information...");
                 sock.receive(udpPacket);
                 frase = new String(udpPacket.getData(), 0, udpPacket.getLength());
                 System.out.println("Received reply: " + frase);
             }
             sock.close();
-        } catch (SocketException ex) {
-            Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SocketTimeoutException ex) {
+            /*
+            Do nothing
+             */
         } catch (IOException ex) {
             Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,5 +69,23 @@ public class UDPClient implements Runnable {
 
     public String getServerIP() {
         return serverIP.getHostAddress();
+    }
+
+    public void exit() {
+        execute = false;
+    }
+
+    public void sendMessage(final String message) {
+        if (message != null) {
+            try {
+                byte[] data = message.getBytes();
+                DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
+                sock.send(udp);
+                System.out.println("Sent message to: " + serverIP.getHostAddress());
+            } catch (IOException ex) {
+                Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 }

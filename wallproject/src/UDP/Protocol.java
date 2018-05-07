@@ -13,10 +13,11 @@ import java.net.DatagramPacket;
  */
 public class Protocol {
 
+    public static final char STARTING_COMMAND = '@';
     public static final String KEYWORDS[] = {"hello", "getwall", "confirm", "error;resend;", "success"};
     public static final String NUMBER_SPLITTER = "/";
     public static final String MSG_SPLITTER = ";";
-    
+
     public Protocol() {
     }
 
