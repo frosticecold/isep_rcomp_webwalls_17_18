@@ -13,8 +13,9 @@ import javax.swing.JOptionPane;
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 public class GUIClient extends javax.swing.JFrame {
-
-    private static Client client;
+    
+    private Client client;
+    private String wallname;
 
     /**
      * Creates new form GUIClient
@@ -36,24 +37,23 @@ public class GUIClient extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        chattxtarea = new javax.swing.JTextPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        inputxtarea = new javax.swing.JTextPane();
         sendButton = new javax.swing.JButton();
+        settingsButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        menuitem_changeip = new javax.swing.JMenuItem();
-        menuitem_changewall = new javax.swing.JMenuItem();
         menuitem_exit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wall Application");
 
-        jTextPane1.setEditable(false);
-        jTextPane1.setBackground(new java.awt.Color(204, 204, 255));
-        jTextPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jScrollPane2.setViewportView(jTextPane1);
+        chattxtarea.setEditable(false);
+        chattxtarea.setBackground(new java.awt.Color(255, 255, 255));
+        chattxtarea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane2.setViewportView(chattxtarea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -67,19 +67,29 @@ public class GUIClient extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextPane2.setBackground(new java.awt.Color(204, 204, 255));
-        jScrollPane3.setViewportView(jTextPane2);
+        inputxtarea.setBackground(new java.awt.Color(255, 255, 255));
+        inputxtarea.setEnabled(false);
+        jScrollPane3.setViewportView(inputxtarea);
 
         sendButton.setText("Send");
+        sendButton.setEnabled(false);
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendButtonActionPerformed(evt);
+            }
+        });
+
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings_black_48x48.png"))); // NOI18N
+        settingsButton.setBorderPainted(false);
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
             }
         });
 
@@ -87,35 +97,28 @@ public class GUIClient extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 6, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jMenu1.setText("Menu");
-
-        menuitem_changeip.setText("Change IP");
-        menuitem_changeip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuitem_changeipActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuitem_changeip);
-
-        menuitem_changewall.setText("Change Wall");
-        jMenu1.add(menuitem_changewall);
 
         menuitem_exit.setText("Exit");
         menuitem_exit.addActionListener(new java.awt.event.ActionListener() {
@@ -140,74 +143,48 @@ public class GUIClient extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        client.sendMessage(inputxtarea.getText());
+    }//GEN-LAST:event_sendButtonActionPerformed
+
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        SettingsUIDialog dialog = new SettingsUIDialog(this, true);
+    }//GEN-LAST:event_settingsButtonActionPerformed
+
     private void menuitem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_exitActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuitem_exitActionPerformed
 
-    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sendButtonActionPerformed
-
-    private void menuitem_changeipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_changeipActionPerformed
-        boolean valid = true;
-        String ip;
-        do {
-            ip = JOptionPane.showInputDialog("Please input the new server ip.");
-            boolean matches = ip.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}");
-            if (matches) {
-                valid = true;
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid IP Address", "Error!", JOptionPane.ERROR_MESSAGE);
-                valid = false;
-            }
-        } while (!valid);
-
+    public void newConnection(final String ip){
         client.newConnection(ip);
-    }//GEN-LAST:event_menuitem_changeipActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIClient().setVisible(true);
-            }
-        });
+    }
+    
+    public void setWallname(final String wallname){
+        this.wallname=wallname;
+    }
+    
+    public void enableChat() {
+        this.sendButton.setEnabled(true);
+        this.inputxtarea.setEnabled(true);
+    }
+    
+    public void disableChat() {
+        this.inputxtarea.setText(null);
+        this.chattxtarea.setText(null);
+        this.sendButton.setEnabled(false);
+        this.inputxtarea.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane chattxtarea;
+    private javax.swing.JTextPane inputxtarea;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -215,11 +192,8 @@ public class GUIClient extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JMenuItem menuitem_changeip;
-    private javax.swing.JMenuItem menuitem_changewall;
     private javax.swing.JMenuItem menuitem_exit;
     private javax.swing.JButton sendButton;
+    private javax.swing.JButton settingsButton;
     // End of variables declaration//GEN-END:variables
 }

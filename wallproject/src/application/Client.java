@@ -27,7 +27,7 @@ public class Client {
     }
     
     public void sendMessage(final String message){
-        
+        udp_client.sendMessage(message);
     }
     
     public void exit(){
