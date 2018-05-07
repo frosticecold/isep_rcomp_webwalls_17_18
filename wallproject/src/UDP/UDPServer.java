@@ -58,16 +58,13 @@ public class UDPServer implements Runnable {
                 packet_length = udpPacket.getLength();
                 System.out.println("Request from: " + udpPacket.getAddress().getHostAddress()
                         + " port: " + udpPacket.getPort());
-                String s = "Server ip: " + socket.getLocalAddress().getHostAddress() + " " + new String(buffer);
                 /**
                  * send answer *
                  */
-                boolean finished = false;
-                do{
-                   
-                }while(!finished);
-                udpPacket.setData(s.getBytes());
-                udpPacket.setLength(s.getBytes().length);
+                String ans = "Message: "+ new String(udpPacket.getData());
+                System.out.println(ans);
+                udpPacket.setData(ans.getBytes());
+                udpPacket.setLength(ans.getBytes().length);
                 socket.send(udpPacket);
             } catch (IOException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
