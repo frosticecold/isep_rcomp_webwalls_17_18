@@ -7,12 +7,11 @@ package application;
 
 import GUI.GUIClient;
 import HTTP.HTTPServer;
-import UDP.UDPClient;
 import UDP.UDPServer;
+import domain.WallManager;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.UIManager;
 
 /**
  *
@@ -31,6 +30,8 @@ public class Application {
             System.out.println("Error: no parameters.");
         }
         
+        WallManager.getInstance().findOrCreateWall("TestWall");
+        WallManager.getInstance().addMessageToWall("TestWall", "This is a test message");
         try {
             settings = new Settings();
         } catch (IOException ex) {
@@ -47,6 +48,7 @@ public class Application {
     }
     
     private static void decide(String[] args) {
+        
         if (args.length == 0) {
             System.out.println("Error: no arguments");
             System.exit(1);
@@ -68,8 +70,7 @@ public class Application {
                         System.out.println("Running UDPClient thread on server IP: ");
                     }
                 } else {
-                    System.exit(1);
-                    
+                    System.exit(1); 
                 }
             }
         }

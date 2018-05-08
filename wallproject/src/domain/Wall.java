@@ -33,7 +33,6 @@ public class Wall {
         return null;
     }
      */
-    
     public boolean addMessage(String message) {
         if (message.length() <= MESSAGE_SIZE) {
             currentMessageIndex++;
@@ -50,18 +49,18 @@ public class Wall {
         }
         return false;
     }
-    
-    
-    public String wallContent(){
+
+    public String wallContent() {
         StringBuilder sb = new StringBuilder();
-        for(Entry<Integer,String> entry : map.entrySet()){
+        for (Entry<Integer, String> entry : map.entrySet()) {
             sb.append("[").append(entry.getKey()).append("] ")
-                    .append(entry.getValue()).append("\n");
+                    .append(entry.getValue()).append("<p></p>");
         }
         return sb.toString();
     }
-    
-    public byte[] wallContentBytes(){
+
+    public byte[] wallContentBytes() {
         return wallContent().getBytes();
     }
+
 }

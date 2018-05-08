@@ -5,6 +5,8 @@
  */
 package HTTP;
 
+import domain.Wall;
+import domain.WallManager;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -27,9 +29,12 @@ public class HTTPRequest extends Thread {
     }
 
     private void methodGet(HTTPmessage request, HTTPmessage response) throws IOException {
-        if (request.getURI().equals("/walls")) {
-            response.setContentFromString(
-                    HTTPServer.getVotesStandingInHTML(), "text/html");
+
+        if (request.getURI().startsWith("/walls/")) {
+            String uri[] = request.getURI().split("/");
+
+            Wall wall = WallManager.getInstance().findOrCreateWall(uri[2]);
+            response.setContentFromWall(wall, "text/html");
             response.setResponseStatus("200 Ok");
         } else {
             String fullname = baseFolder + "/";
@@ -51,12 +56,54 @@ public class HTTPRequest extends Thread {
     }
 
     private void methodDelete(HTTPmessage request, HTTPmessage response) throws IOException {
+        if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/")) {
+            String uri[] = request.getURI().split("/");
+            String wallname = uri[uri.length - 3];
+            int messageNumber = Integer.parseInt(uri[uri.length - 1]);
+            
+            Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
+            if (messageNumber > 0) {
+                wall.removeMessage(messageNumber);
+                response.setContentFromWall(wall, "text/html");
+                response.setResponseStatus("200 Ok");
+            }
 
+        } else {
+            response.setContentFromString(
+                    "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",
+                    "text/html");
+            response.setResponseStatus("405 Method Not Allowed");
+        }
+        response.send(outS);
+    }
+
+    private void methodPost(HTTPmessage request, HTTPmessage response) throws IOException {
+        if (request.getMethod().equals("POST") && request.getURI().startsWith("/walls/")) {
+
+            String uri[] = request.getURI().split("/");
+            String message = uri[uri.length - 1];
+            String wallname = uri[uri.length - 2];
+            if (!message.isEmpty() && !message.contains("/")) {
+                message = message.replace("%20", " ");
+                System.out.println(message + " MENSAGEM ");
+                WallManager.getInstance().addMessageToWall(wallname, message);
+                Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
+                response.setContentFromWall(wall, "text/html");
+                response.setResponseStatus("200 Ok");
+            }
+
+        } else {
+            response.setContentFromString(
+                    "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",
+                    "text/html");
+            response.setResponseStatus("405 Method Not Allowed");
+        }
+        response.send(outS);
     }
 
     private void methodPut(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("PUT")
-                && request.getURI().startsWith("/votes/")) {
+                && request.getURI().startsWith("/walls/")) {
             HTTPServer.castVote(request.getURI().substring(7));
             response.setResponseStatus("200 Ok");
         } else {
@@ -78,13 +125,15 @@ public class HTTPRequest extends Thread {
         try {
             HTTPmessage request = new HTTPmessage(inS);
             HTTPmessage response = new HTTPmessage();
-            System.out.println(request.getURI());
 
             if (request.getMethod().equals("GET")) {
                 methodGet(request, response);
-            } else { 
-                methodPut(request, response);
+            } else if (request.getMethod().equals("POST")) {
+                methodPost(request, response);
+            } else if (request.getMethod().equals("DELETE")) {
+                methodDelete(request, response);
             }
+            System.out.println(request.getURI());
         } catch (IOException ex) {
             System.out.println("Thread error when reading request");
         }

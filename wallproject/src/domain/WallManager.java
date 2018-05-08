@@ -86,7 +86,7 @@ public class WallManager {
      * @param nameOfWall
      * @return
      */
-    private synchronized Wall findOrCreateWall(final String nameOfWall) {
+    public synchronized Wall findOrCreateWall(final String nameOfWall) {
         Wall w;
         if (!mapOfWalls.containsKey(nameOfWall)) {
             w = new Wall();
@@ -105,7 +105,7 @@ public class WallManager {
      * @return
      */
     public synchronized String getWallInformation(final String nameOfWall) {
-        Wall w =findOrCreateWall(nameOfWall);
+        Wall w = findOrCreateWall(nameOfWall);
         return w.wallContent();
     }
 
@@ -121,4 +121,5 @@ public class WallManager {
         }
         return new byte[0];
     }
+
 }

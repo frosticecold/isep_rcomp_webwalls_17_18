@@ -5,6 +5,7 @@
  */
 package HTTP;
 
+import domain.Wall;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -202,25 +203,29 @@ public class HTTPmessage {
     }
 
     /**
-     * Settles the HTTP message’s content-type (ct)
-     * and the content from a provided string (c).
-     * 
+     * Settles the HTTP message’s content-type (ct) and the content from a
+     * provided string (c).
+     *
      * @param c
-     * @param ct 
+     * @param ct
      */
     public void setContentFromString(String c, String ct) {
         content = c.getBytes();
         contentType = ct;
     }
 
+    public void setContentFromWall(Wall wall, String ct) {
+        content = wall.wallContentBytes();
+        contentType = ct;
+    }
+
     /**
-     * Settles the HTTP message’s content by reading it from a provided filename. 
-     * Returns false if fails to read the file. 
-     * On success, this method also settles the content type for a few known 
-     * file extensions.
-     * 
+     * Settles the HTTP message’s content by reading it from a provided
+     * filename. Returns false if fails to read the file. On success, this
+     * method also settles the content type for a few known file extensions.
+     *
      * @param fname
-     * @return 
+     * @return
      */
     public boolean setContentFromFile(String fname) {
         File f = new File(fname);

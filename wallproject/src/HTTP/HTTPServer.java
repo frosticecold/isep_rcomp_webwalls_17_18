@@ -74,13 +74,11 @@ public class HTTPServer implements Runnable {
         return textHtml;
     }
 
-    public static synchronized String getWallStandingInHTML() {
-        String textHtml = "<hr><ul>";
-        textHtml = textHtml + "<li><button type=button onclick=getCurrentWall()</button></li>";
-        textHtml = textHtml + "</ul><hr><p>HTTP server accesses counter: " + accessesCounter + "</p><hr>";
-        return textHtml;
+    public static synchronized Wall getWallStandingInHTML(String wallname) {
+        Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
+        return wall;
     }
-
+    
     public static synchronized void castVote(String i) {
         int cN;
         try {
