@@ -14,9 +14,20 @@ import java.net.DatagramPacket;
 public class Protocol {
 
     public static final char STARTING_COMMAND = '@';
-    public static final String KEYWORDS[] = {"hello", "getwall", "confirm", "error;resend;", "success"};
+    public static final char MSG_INDEX = '#';
+    public static final char HEADER_FILLER = '?';
+    public static final String MSG_TOTAL_CONTENT = "#!";
+    
+    public static final String KEYWORDS[] = {"@hello", "@getwall", "@confirm", "@error@resend", "@success", "@checksum"};
     public static final String NUMBER_SPLITTER = "/";
     public static final String MSG_SPLITTER = ";";
+
+    public static final int HELLO_COMMAND = 0;
+    public static final int GETWALL_COMMAND = 1;
+    public static final int CONFIRM_COMMAND = 2;
+    public static final int ERROR_RESEND_COMMAND = 3;
+    public static final int SUCCESS_COMMAND = 4;
+    public static final int CHECKSUM_COMMAND = 5;
 
     public Protocol() {
     }
@@ -24,5 +35,9 @@ public class Protocol {
     public DatagramPacket[] interpret(DatagramPacket source) {
 
         return null;
+    }
+
+    public static String buildGetWallCommand(final String wallname) {
+        return Protocol.KEYWORDS[Protocol.GETWALL_COMMAND] + MSG_SPLITTER + wallname;
     }
 }

@@ -5,7 +5,7 @@
  */
 package application;
 
-import GUI.GUIClient;
+import client.gui.GUIClient;
 import HTTP.HTTPServer;
 import UDP.UDPServer;
 import domain.WallManager;

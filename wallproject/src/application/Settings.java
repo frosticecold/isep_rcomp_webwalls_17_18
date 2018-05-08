@@ -13,11 +13,12 @@ public class Settings {
 
     private static final String CONFIG_PROPERTIES = "config.properties";
 
-    public static final String[] PROPERTIES_KEYWORDS = {"udp_port", "tcp_port", "udp_packet_size"};
+    public static final String[] PROPERTIES_KEYWORDS = {"udp_port", "tcp_port", "udp_packet_size","udp_packet_header"};
 
     public static int UDP_PORT;
     public static int TCP_PORT;
     public static int UDP_PACKET_SIZE;
+    public static int UDP_PACKET_HEADER;
 
     public Settings() throws IOException {
         loadSettings();
@@ -36,6 +37,7 @@ public class Settings {
         UDP_PORT = Integer.parseInt(prop.getProperty(PROPERTIES_KEYWORDS[0]));
         TCP_PORT = Integer.parseInt(prop.getProperty(PROPERTIES_KEYWORDS[1]));
         UDP_PACKET_SIZE = Integer.parseInt(prop.getProperty(PROPERTIES_KEYWORDS[2]));
+        UDP_PACKET_HEADER = Integer.parseInt(prop.getProperty(PROPERTIES_KEYWORDS[3]));
     }
 
 }
