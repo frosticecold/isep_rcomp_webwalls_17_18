@@ -95,22 +95,30 @@ public class UDPClient implements Runnable {
     public void sendMessage(final String message) {
         if (message != null && !message.isEmpty()) {
             try {
-                String command = Protocol.getCommand(Protocol.WALL_MSG_COMMAND) + ";";
-                command += message;
-                command = command.trim();
-                byte[] data = command.getBytes();
-                //if (data.length > Settings.UDP_PACKET_SIZE) {
-                //    LinkedList<DatagramPacket> list_of_packets = Interpreter.buildMultipleMessage(serverIP, Settings.UDP_PORT, data);
-                //    Interpreter.sendMultiplePackets(serverIP, Settings.UDP_PORT, data, list_of_packets);
-                //    System.out.println("Sending multiple messages...");
-                //} else {
+                byte[] data = message.getBytes();
                 /*
-                        Send how many bytes
+                        Send message
                  */
                 DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
+                sock.send(udp);
+                System.out.println("Message: " + message);
+                System.out.println("Sent content to: " + serverIP.getHostAddress() + ":" + Settings.UDP_PORT);
+            } catch (IOException ex) {
+                Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+    public void sendWallMessageWithHeader(final String wallname, final String message) {
+        if (message != null && !message.isEmpty()) {
+            try {
+                String msg = Protocol.buildWallAndMessageCommand(wallname, message);
+                byte[] data = msg.getBytes();
                 /*
-                        Send bytes
+                        Send message
                  */
+                DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
                 sock.send(udp);
                 System.out.println("Message: " + message);
                 System.out.println("Sent content to: " + serverIP.getHostAddress() + ":" + Settings.UDP_PORT);
@@ -155,13 +163,13 @@ public class UDPClient implements Runnable {
                         iscommand = true;
                         resetValues();
                         break;
-                    case "@checksum_client":
+                    case "@checksum_server":
                         if (currentByteCount == expectedSize) {
                             GUIClient.getInstance().changeWallText(content);
-                            System.out.println("Successfully received message.");
+                            System.out.println("Successfully received wall content.");
                         } else {
                             final String currentWall = GUIClient.getInstance().getCurrentWallName();
-                            String resend_command = Protocol.buildErrorResend(currentWall);
+                            String resend_command = Protocol.buildGetWallCommand(currentWall);
                             client.Client.getInstance().sendMessage(resend_command);
 
                             resetValues();
@@ -169,7 +177,17 @@ public class UDPClient implements Runnable {
                         iscommand = true;
                         break;
                     case "@success":
-                        GUIClient.getInstance().showSuccess();
+                        GUIClient.getInstance().showMessageSuccess(true);
+                        break;
+                    case "@failed":
+                        GUIClient.getInstance().showMessageSuccess(false);
+                        break;
+                    case "@error@resend@message":
+                        final String message = GUIClient.getInstance().getMessage();
+                        final String wallname = args[1];
+                        client.Client.getInstance().sendMessageToWall(wallname, message);
+                        break;
+                    default:
                         break;
                 }
             }
@@ -225,7 +243,6 @@ public class UDPClient implements Runnable {
             String str = Protocol.buildTotalChecksumPacket(wallcontent);
             byte[] data = str.getBytes();
             return new DatagramPacket(data, data.length, serveripaddress, port);
-
         }
 
         private static LinkedList<byte[]> splitInformation(final byte[] messagecontent, final int UDP_BODY_SIZE) {

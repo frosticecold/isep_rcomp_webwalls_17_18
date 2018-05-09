@@ -23,11 +23,11 @@ import java.util.logging.Logger;
  * @author Raúl Correia
  */
 public class UDPServer implements Runnable {
-    
+
     private static DatagramSocket sock;
-    
+
     private static volatile boolean execute = true;
-    
+
     public UDPServer() {
         try {
             sock = new DatagramSocket(Settings.UDP_PORT);
@@ -35,15 +35,13 @@ public class UDPServer implements Runnable {
             Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
-        
+
     }
-    
+
     @Override
     public void run() {
         System.out.println("Listening for UDP requests (IPv6/IPv4). Use CTRL+C to terminate the server.");
         byte[] buffer = new byte[Settings.UDP_PACKET_SIZE];
-        byte[] response = new byte[Settings.UDP_PACKET_SIZE];
-        int packet_length;
         /**
          * Buffer *
          */
@@ -85,17 +83,17 @@ public class UDPServer implements Runnable {
             } catch (IOException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
-        
+
     }
-    
+
     public void exit() {
         execute = false;
     }
-    
+
     static class Interpreter {
-        
+
         static void resolve(DatagramPacket request) {
             byte[] data = request.getData();
             String line = new String(data).trim();
@@ -108,7 +106,7 @@ public class UDPServer implements Runnable {
                 }
             }
         }
-        
+
         static void resolveCommands(DatagramPacket request, String[] args) throws IOException {
             if (args[0].charAt(0) == Protocol.STARTING_COMMAND) {
                 String command = args[0];
@@ -120,7 +118,6 @@ public class UDPServer implements Runnable {
                         sock.send(udp);
                     }
                     break;
-                    
                     case "@getwall": {
                         if (args.length > 1) {
                             if (!args[1].isEmpty()) {
@@ -133,20 +130,54 @@ public class UDPServer implements Runnable {
                         }
                     }
                     break;
-                    
+                    case "@wall": {
+                        if (args.length == 5) {
+                            if (args[3].equals("@msg")) {
+                                String wallname = args[1];
+                                int messagecontent = Integer.parseInt(args[2]);
+                                String msgcontent = args[4];
+                                /**
+                                 * If received full message then add and confirm
+                                 */
+                                if (messagecontent == msgcontent.length()) {
+                                    WallManager.getInstance().findOrCreateWall(wallname);
+                                    boolean ret = WallManager.getInstance().addMessageToWall(wallname, msgcontent);
+                                    if (ret == true) {
+                                        byte data[] = Protocol.getCommand(Protocol.SUCCESS_COMMAND).getBytes();
+                                        DatagramPacket pckt = new DatagramPacket(data, data.length, request.getAddress(), request.getPort());
+                                        sock.send(pckt);
+                                    }
+                                } /**
+                                 * Then it's because we didnt receive full
+                                 * message
+                                 */
+                                else {
+                                    String msg = Protocol.buildErrorFailed(wallname);
+                                    byte data[] = msg.getBytes();
+                                    DatagramPacket pckt = new DatagramPacket(data, data.length, request.getAddress(), request.getPort());
+                                    sock.send(pckt);
+                                }
+                            }
+                        }
+
+                    }
+                    break;
+                    default:
+                        break;
+
                 }
             }
         }
     }
-    
+
     static LinkedList<DatagramPacket> buildMultipleMessage(DatagramPacket request, byte[] content) {
-        
+
         LinkedList<DatagramPacket> ll_packets = new LinkedList<>();
         int indexContent = 0;
         int indexPacket = 1;
-        
+
         final int UDP_BODY_SIZE = Settings.UDP_PACKET_SIZE - Settings.UDP_PACKET_HEADER;
-        
+
         boolean finished = false;
         LinkedList<byte[]> splitWallInformation = splitWallInformation(content, UDP_BODY_SIZE);
         while (!splitWallInformation.isEmpty()) {
@@ -157,13 +188,13 @@ public class UDPServer implements Runnable {
         }
         return ll_packets;
     }
-    
+
     private static DatagramPacket buildChecksumPacket(DatagramPacket request, byte[] wallcontent) {
-        
+
         String str = Protocol.buildTotalChecksumPacket(wallcontent);
         byte[] data = str.getBytes();
         return new DatagramPacket(data, data.length, request.getAddress(), request.getPort());
-        
+
     }
 
     /*
@@ -204,7 +235,7 @@ public class UDPServer implements Runnable {
         } while (running);
         return content;
     }
-    
+
     private static void sendMultiplePackets(DatagramPacket request, byte[] wallcontent, LinkedList<DatagramPacket> packets) throws IOException {
         /**
          * Send how much information we going to send

@@ -5,6 +5,7 @@
  */
 package client.gui;
 
+import UDP.Protocol;
 import client.Client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -156,9 +157,14 @@ public class GUIClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        if (inputxtarea.getText().length() <= NUMBER_OF_CHARS) {
-            client.sendMessage(inputxtarea.getText());
-            message = inputxtarea.getText();
+        int numberofchars = inputxtarea.getText().length();
+        if (numberofchars <= NUMBER_OF_CHARS) {
+            message = inputxtarea.getText().trim();
+            if (message.charAt(0) == Protocol.STARTING_COMMAND) {
+                client.sendMessage(message);
+            } else {
+                client.sendMessageToWall(wallname, message);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Error the limit is: " + NUMBER_OF_CHARS + " characters.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -212,8 +218,12 @@ public class GUIClient extends javax.swing.JFrame {
         this.inputxtarea.setEnabled(false);
     }
 
-    public void showSuccess() {
-        JOptionPane.showMessageDialog(this, "Successfully sent message!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+    public void showMessageSuccess(boolean reached) {
+        if (reached) {
+            JOptionPane.showMessageDialog(this, "Successfully sent message!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error, message couldn't be sent entirely.", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void refreshWallThread() {

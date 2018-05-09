@@ -41,9 +41,16 @@ public class Client {
         }
         if (message.charAt(0) == Protocol.STARTING_COMMAND) {
             udp_client.sendMessage(message);
-        } else {
-            
         }
+
+    }
+
+    public void sendMessageToWall(final String wallname, final String message) {
+        if (message == null || message.isEmpty()) {
+            return;
+        }
+
+        udp_client.sendWallMessageWithHeader(wallname,message);
     }
 
     public void sendHello() {
