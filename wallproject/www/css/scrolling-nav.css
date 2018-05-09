@@ -17,105 +17,343 @@ header {
 section {
   padding: 150px 0;
 }
- body {
-            font: 12px arial;
-            color: #222;
-            text-align: center;
-            padding: 35px;
-        }
+body {
+  font: 12px arial;
+  color: #222;
+  text-align: center;
+  padding: 35px;
+}
 
-        form,
-        p,
-        span {
-            margin: 0;
-            padding: 0;
-        }
+form,
+p,
+span {
+  margin: 0;
+  padding: 0;
+}
 
-        input {
-            font: 12px arial;
-        }
+input {
+  font: 12px arial;
+}
 
-        a {
-            color: #0000FF;
-            text-decoration: none;
-        }
+a {
+  color: #0000ff;
+  text-decoration: none;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
+a:hover {
+  text-decoration: underline;
+}
 
-        #wrapper,
-        #loginform {
-            margin: 0 auto;
-            padding-bottom: 25px;
-            background: #EBF4FB;
-            width: 504px;
-            border: 1px solid #ACD8F0;
-        }
+#wrapper {
+  margin: 0 auto;
+  padding-bottom: 25px;
+  background: #212529;
+  width: 800px;
+  border: 1px solid #acd8f0;
+}
 
-        #chatbox {
-            text-align: left;
-            margin: 0 auto;
-            margin-top: 15px;
-            margin-bottom: 25px;
-            padding: 10px;
-            background: #fff;
-            height: 270px;
-            width: 430px;
-            border: 1px solid #ACD8F0;
-            overflow: auto;
-        }
+#chatbox {
+  text-align: left;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  padding: 10px;
+  background: #fff;
+  height: 270px;
+  width: 770px;
+  border: 1px solid #acd8f0;
+  overflow: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-        #idwall {
-            width: 326px;
-            border: 1px solid #ACD8F0;
-        }
+}
 
-        #idDeleteWall{
-            margin-top: 5px;
-            width: 326px;
-            border: 1px solid #ACD8F0;
-        }
+#idwall {
+  width: 326px;
+  border: 1px solid #acd8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-        #idDeleteButton{
-            width: 100px;
-        }
+}
 
-        #submitmsg{
-            width:100px;
-        }
+#idDeleteWall {
+  margin-top: 5px;
+  width: 326px;
+  border: 1px solid #acd8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-        #wallButton{
-            width: 100px;
-        }
-        
-        #usermsg {
-            width: 326px;
-            border: 1px solid #ACD8F0;
-        }
+}
 
-        #msgid {
-            margin-top: 5px;
-            width: 15px;
-            border: 1px solid #ACD8F0;
-        }
+#idDeleteButton {
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-        #submit {
-            width: 60px;
-        }
+}
 
-        .error {
-            color: #ff0000;
-        }
+#submitmsg {
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-        #menu {
-            padding: 12.5px 25px 12.5px 25px;
-        }
+}
 
-        .welcome {
-            float: left;
-        }
+#wallButton {
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-        .msgln {
-            margin: 0 0 2px 0;
-        }
+}
+
+#usermsg {
+  width: 326px;
+  border: 1px solid #acd8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+#msgid {
+  margin-top: 5px;
+  width: 15px;
+  border: 1px solid #acd8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+#submit {
+  width: 60px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.error {
+  color: #ff0000;
+}
+
+#menu {
+  padding: 12.5px 25px 12.5px 25px;
+}
+
+.welcome {
+  float: left;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.msgln {
+  margin: 0 0 2px 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.glitch {
+  position: relative;
+  top: 40%;
+  color: #fff;
+  margin: 0 auto;
+  font-size: 80px;
+  font-family: Verdana;
+  font-weight: 600;
+  text-align: center;
+}
+
+.glitch:before, .glitch:after {
+  content: url(rcompleto_logo.png);
+  background-position: 5px 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-color: #212529;
+  color:#fff;
+}
+
+.glitch:before {
+  left: 4px;
+  text-shadow: 2px 0 #00ffea;
+  animation: effect 3s infinite linear;
+}
+
+.glitch:after {
+  left: 4px;
+  text-shadow: -2px 0 #fe3a7f;
+  animation: effect 2s infinite linear;
+}
+
+@keyframes effect {
+  0% {
+      clip: rect(65px, 9999px, 78px, 0);
+  }
+  5% {
+      clip: rect(45px, 9999px, 42px, 0);
+  }
+  10% {
+      clip: rect(53px, 9999px, 31px, 0);
+  }
+  15% {
+      clip: rect(32px, 9999px, 24px, 0);
+  }
+  20% {
+      clip: rect(12px, 9999px, 73px, 0);
+  }
+  25% {
+      clip: rect(37px, 9999px, 53px, 0);
+  }
+  30% {
+      clip: rect(63px, 9999px, 73px, 0);
+  }
+  35% {
+      clip: rect(72px, 9999px, 83px, 0);
+  }
+  40% {
+      clip: rect(71px, 9999px, 86px, 0);
+  }
+  45% {
+      clip: rect(98px, 9999px, 90px, 0);
+  }
+  50% {
+      clip: rect(17px, 9999px, 52px, 0);
+  }
+  55% {
+      clip: rect(90px, 9999px, 13px, 0);
+  }
+  60% {
+      clip: rect(80px, 9999px, 34px, 0);
+  }
+  65% {
+      clip: rect(54px, 9999px, 24px, 0);
+  }
+  70% {
+      clip: rect(26px, 9999px, 65px, 0);
+  }
+  75% {
+      clip: rect(84px, 9999px, 53px, 0);
+  }
+  80% {
+      clip: rect(52px, 9999px, 21px, 0);
+  }
+  85% {
+      clip: rect(15px, 9999px, 65px, 0);
+  }
+  90% {
+      clip: rect(23px, 9999px, 74px, 0);
+  }
+  95% {
+      clip: rect(34px, 9999px, 57px, 0);
+  }
+  100% {
+      clip: rect(62px, 9999px, 34px, 0);
+  }
+}
+
+.button {
+  display: inline-block;
+  margin: 0 auto;
+  
+  -webkit-border-radius: 10px;
+  
+  
+  -webkit-transition: -webkit-box-shadow .1s ease-in-out;
+} 
+
+.button span {
+  
+  background-image: 
+      /* gloss gradient */
+      -webkit-gradient(
+          linear, 
+          left bottom, 
+          left top, 
+          color-stop(50%,rgba(255,255,255,0)), 
+          color-stop(50%,rgba(255,255,255,0.3)), 
+          color-stop(100%,rgba(255,255,255,0.2))),
+      
+      /* dark outside gradient */
+      -webkit-gradient(
+          linear, 
+          left top, 
+          right top, 
+          color-stop(0%,rgba(210,210,210,0.3)), 
+          color-stop(20%,rgba(210,210,210,0)), 
+          color-stop(80%,rgba(210,210,210,0)), 
+          color-stop(100%,rgba(210,210,210,0.3))),
+      
+      /* light inner gradient */
+      -webkit-gradient(
+          linear, 
+          left top, 
+          right top, 
+          color-stop(0%,rgba(255,255,255,0)), 
+          color-stop(20%,rgba(255,255,255,0.5)), 
+          color-stop(80%,rgba(255,255,255,0.5)), 
+          color-stop(100%,rgba(255,255,255,0))),        
+      
+      /* diagonal line pattern */
+      -webkit-gradient(
+          linear, 
+          0% 100%, 
+          100% 0%, 
+          color-stop(0%,rgba(255,255,255,0)), 
+          color-stop(40%,rgba(255,255,255,0)), 
+          color-stop(40%,#D2D2D1), 
+          color-stop(60%,#D2D2D1), 
+          color-stop(60%,rgba(255,255,255,0)), 
+          color-stop(100%,rgba(255,255,255,0)));
+  
+      -webkit-box-shadow:
+          0px -1px #fff, /* top highlight */
+          0px 1px 1px #FFFFFF; /* bottom edge */
+  
+  -webkit-background-size: 100%, 100%, 100%, 4px 4px;
+  
+  -webkit-border-radius: 10px;
+  -webkit-transition: -webkit-transform .1s ease-in-out;
+  
+  display: inline-block;
+
+  width: 120px;
+  
+  color: #3A474D;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  
+  text-shadow: 0px 1px #fff, 0px -1px #262F33;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+      .button span:hover {
+          color: rgb(0, 0, 0);
+          text-shadow: 0px -1px #97A63A;
+          cursor: pointer;
+      }
+
+      .button:active {
+          -webkit-box-shadow: 
+              0px 3px rgba(128,128,128,1),
+              0px 4px rgba(118,118,118,1),
+              0px 5px rgba(108,108,108,1),
+              0px 6px rgba(98,98,98,1),
+              0px 7px rgba(88,88,88,1),
+              0px 8px rgba(78,78,78,1),
+              0px 10px 2px 0px rgba(128,128,128,.6); /* shadow */
+      }
+
+      .button:active span{
+          -webkit-transform: translate(0, 5px); /* depth of button press */
+      }
+
+  .button span:after {
+      content: ">";
+      display: block;
+      width: 10px;
+      height: 10px;
+  
+      position: absolute;
+      right: 14px;
+      top: 12px;    
+      
+      font-family: 'Cabin';
+      font-weight: 700;
+      color: #AEBF3B;
+      text-shadow: 0px 1px #fff, 0px -1px #97A63A;
+      font-size: 26px;
+  }

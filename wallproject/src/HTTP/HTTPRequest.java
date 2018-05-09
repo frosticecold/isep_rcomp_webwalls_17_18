@@ -63,8 +63,8 @@ public class HTTPRequest extends Thread {
             boolean check = WallManager.getInstance().removeWallByName(wallName);
             System.out.println(wallName);
             System.out.println(check);
-            if(check){
-                response.setContentFromString("alert(\"The wall has been deleted\")", "text/html");
+            if (check) {
+                response.setContentFromString("<html><body>alert(\"The wall has been deleted\")</body></html>", "text/html");
                 response.setResponseStatus("200 Ok");
             }
         } else if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/")) {
@@ -89,7 +89,6 @@ public class HTTPRequest extends Thread {
 
     private void methodPost(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("POST") && request.getURI().startsWith("/walls/")) {
-
             String uri[] = request.getURI().split("/");
             String message = uri[uri.length - 1];
             String wallname = uri[uri.length - 2];
@@ -111,20 +110,6 @@ public class HTTPRequest extends Thread {
         response.send(outS);
     }
 
-    private void methodPut(HTTPmessage request, HTTPmessage response) throws IOException {
-        if (request.getMethod().equals("PUT")
-                && request.getURI().startsWith("/walls/")) {
-            HTTPServer.castVote(request.getURI().substring(7));
-            response.setResponseStatus("200 Ok");
-        } else {
-            response.setContentFromString(
-                    "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",
-                    "text/html");
-            response.setResponseStatus("405 Method Not Allowed");
-        }
-        response.send(outS);
-    }
-
     public void run() {
         try {
             outS = new DataOutputStream(sock.getOutputStream());
@@ -135,7 +120,6 @@ public class HTTPRequest extends Thread {
         try {
             HTTPmessage request = new HTTPmessage(inS);
             HTTPmessage response = new HTTPmessage();
-
             if (request.getMethod().equals("GET")) {
                 methodGet(request, response);
             } else if (request.getMethod().equals("POST")) {
