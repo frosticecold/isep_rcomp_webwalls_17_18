@@ -56,18 +56,28 @@ public class HTTPRequest extends Thread {
     }
 
     private void methodDelete(HTTPmessage request, HTTPmessage response) throws IOException {
-        if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/")) {
+        if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/delete/")) {
+            System.out.println("Ola");
+            String uri[] = request.getURI().split("/");
+            String wallName = uri[3];
+            boolean check = WallManager.getInstance().removeWallByName(wallName);
+            System.out.println(wallName);
+            System.out.println(check);
+            if(check){
+                response.setContentFromString("alert(\"The wall has been deleted\")", "text/html");
+                response.setResponseStatus("200 Ok");
+            }
+        } else if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/")) {
             String uri[] = request.getURI().split("/");
             String wallname = uri[uri.length - 3];
             int messageNumber = Integer.parseInt(uri[uri.length - 1]);
-            
+
             Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
             if (messageNumber > 0) {
                 wall.removeMessage(messageNumber);
                 response.setContentFromWall(wall, "text/html");
                 response.setResponseStatus("200 Ok");
             }
-
         } else {
             response.setContentFromString(
                     "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",

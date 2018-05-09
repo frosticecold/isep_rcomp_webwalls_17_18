@@ -67,12 +67,30 @@ section {
         }
 
         #idwall {
-            width: 395px;
+            width: 326px;
             border: 1px solid #ACD8F0;
         }
 
+        #idDeleteWall{
+            margin-top: 5px;
+            width: 326px;
+            border: 1px solid #ACD8F0;
+        }
+
+        #idDeleteButton{
+            width: 100px;
+        }
+
+        #submitmsg{
+            width:100px;
+        }
+
+        #wallButton{
+            width: 100px;
+        }
+        
         #usermsg {
-            width: 395px;
+            width: 326px;
             border: 1px solid #ACD8F0;
         }
 

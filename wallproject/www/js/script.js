@@ -2,8 +2,10 @@ var mArea;
 var wallname;
 var message, wall, wallcontent; // defined only after the document is loaded
 var msgNum;
+var delWall;
 
 function loadAndStart() {
+  delWall= document.getElementById("idDeleteWall");
   mArea = document.getElementById("wallcontent");
   message = document.getElementById("usermsg");
   msgNum = document.getElementById("msgid");
@@ -55,4 +57,10 @@ function deleteMessageFromWall() {
     request.send();
     setTimeout(updateWall, 10000);
   }
-  
+
+function deleteWall() {
+    var request = new XMLHttpRequest();
+    request.open("DELETE", "/walls/delete/" + delWall.value, true);
+    request.send();
+    setTimeout(updateWall, 10000);
+  }
