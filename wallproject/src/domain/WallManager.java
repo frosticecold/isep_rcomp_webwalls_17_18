@@ -121,5 +121,28 @@ public class WallManager {
         }
         return new byte[0];
     }
+    /**
+     * Gets a wall information in a preformatted html string
+     *
+     * @param nameOfWall
+     * @return
+     */
+    public  String getWallInformationHTML(final String nameOfWall) {
+        Wall w = findOrCreateWall(nameOfWall);
+        return w.wallContentToHTML();
+    }
+
+    /**
+     * Returns a wall information in bytes to html format
+     *
+     * @param nameOfWall
+     * @return
+     */
+    public  byte[] getWallInformationBytesHTML(final String nameOfWall) {
+        if (mapOfWalls.containsKey(nameOfWall)) {
+            return mapOfWalls.get(nameOfWall).wallContentBytesToHTLM();
+        }
+        return new byte[0];
+    }
 
 }
