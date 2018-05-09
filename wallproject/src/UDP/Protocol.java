@@ -18,7 +18,7 @@ public class Protocol {
     public static final char HEADER_FILLER = '?';
     public static final String MSG_TOTAL_CONTENT = "#!";
 
-    public static final String KEYWORDS[] = {"@hello", "@getwall", "@confirm", "@error@resend", "@success", "@checksum"};
+    public static final String KEYWORDS[] = {"@hello", "@getwall", "@confirm", "@error@resend", "@success", "@checksum","@checksum_client","@checksum_server","@wall@msg"};
     public static final String NUMBER_SPLITTER = "/";
     public static final String MSG_SPLITTER = ";";
 
@@ -28,6 +28,9 @@ public class Protocol {
     public static final int ERROR_RESEND_COMMAND = 3;
     public static final int SUCCESS_COMMAND = 4;
     public static final int CHECKSUM_COMMAND = 5;
+    public static final int CHECKSUM_CLIENT_COMMAND = 6;
+    public static final int CHECKSUM_SERVER_COMMAND = 7;
+    public static final int WALL_MSG_COMMAND = 8;
 
     public Protocol() {
     }

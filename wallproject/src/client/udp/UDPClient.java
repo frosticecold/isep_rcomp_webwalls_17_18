@@ -15,8 +15,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,7 +63,7 @@ public class UDPClient implements Runnable {
             System.out.println("Getting information...");
             while (execute) {
                 sock.receive(udpPacket);
-                int udp_length = udpPacket.getLength();
+                //int udp_length = udpPacket.getLength();
                 frase = new String(udpPacket.getData(), 0, udpPacket.getLength());
                 System.out.println("Received reply: " + frase);
 
@@ -95,11 +95,25 @@ public class UDPClient implements Runnable {
     public void sendMessage(final String message) {
         if (message != null && !message.isEmpty()) {
             try {
-                byte[] data = message.getBytes();
+                String command = Protocol.getCommand(Protocol.WALL_MSG_COMMAND) + ";";
+                command += message;
+                command = command.trim();
+                byte[] data = command.getBytes();
+                //if (data.length > Settings.UDP_PACKET_SIZE) {
+                //    LinkedList<DatagramPacket> list_of_packets = Interpreter.buildMultipleMessage(serverIP, Settings.UDP_PORT, data);
+                //    Interpreter.sendMultiplePackets(serverIP, Settings.UDP_PORT, data, list_of_packets);
+                //    System.out.println("Sending multiple messages...");
+                //} else {
+                /*
+                        Send how many bytes
+                 */
                 DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
+                /*
+                        Send bytes
+                 */
                 sock.send(udp);
                 System.out.println("Message: " + message);
-                System.out.println("Sent message to: " + serverIP.getHostAddress());
+                System.out.println("Sent content to: " + serverIP.getHostAddress() + ":" + Settings.UDP_PORT);
             } catch (IOException ex) {
                 Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -141,7 +155,7 @@ public class UDPClient implements Runnable {
                         iscommand = true;
                         resetValues();
                         break;
-                    case "@checksum":
+                    case "@checksum_client":
                         if (currentByteCount == expectedSize) {
                             GUIClient.getInstance().changeWallText(content);
                             System.out.println("Successfully received message.");
@@ -153,6 +167,9 @@ public class UDPClient implements Runnable {
                             resetValues();
                         }
                         iscommand = true;
+                        break;
+                    case "@success":
+                        GUIClient.getInstance().showSuccess();
                         break;
                 }
             }
@@ -184,5 +201,67 @@ public class UDPClient implements Runnable {
 
         }
 
+        static LinkedList<DatagramPacket> buildMultipleMessage(InetAddress serveripaddress, int port, byte[] content) {
+
+            LinkedList<DatagramPacket> ll_packets = new LinkedList<>();
+            int indexContent = 0;
+            int indexPacket = 1;
+
+            final int UDP_BODY_SIZE = Settings.UDP_PACKET_SIZE - Settings.UDP_PACKET_HEADER;
+
+            boolean finished = false;
+            LinkedList<byte[]> splitWallInformation = splitInformation(content, UDP_BODY_SIZE);
+            while (!splitWallInformation.isEmpty()) {
+                //byte header[] = buildPacketHeader(indexPacket);
+                byte data[] = splitWallInformation.pop();
+                DatagramPacket packet = new DatagramPacket(data, data.length, serveripaddress, port);
+                ll_packets.add(packet);
+            }
+            return ll_packets;
+        }
+
+        private static DatagramPacket buildChecksumPacket(InetAddress serveripaddress, int port, byte[] wallcontent) {
+
+            String str = Protocol.buildTotalChecksumPacket(wallcontent);
+            byte[] data = str.getBytes();
+            return new DatagramPacket(data, data.length, serveripaddress, port);
+
+        }
+
+        private static LinkedList<byte[]> splitInformation(final byte[] messagecontent, final int UDP_BODY_SIZE) {
+            LinkedList<byte[]> content = new LinkedList<>();
+            byte[] data = messagecontent;
+            int numberOfPackets = (int) Math.ceil((double) data.length / UDP_BODY_SIZE);
+            boolean running = true;
+            int startingIndex = 0;
+            int endIndex = UDP_BODY_SIZE - 1;
+            do {
+                if (data.length > UDP_BODY_SIZE) {
+                    byte[] udp_packet = Arrays.copyOfRange(data, startingIndex, endIndex);
+                    data = Arrays.copyOfRange(data, endIndex, data.length);
+                    content.add(udp_packet);
+                } else {
+                    content.add(data);
+                    running = false;
+                }
+            } while (running);
+            return content;
+        }
+
+        private static void sendMultiplePackets(InetAddress serveripaddress, int port, byte[] wallcontent, LinkedList<DatagramPacket> packets) throws IOException {
+            /**
+             * Send how much information we going to send
+             */
+            DatagramPacket checksumpacket = buildChecksumPacket(serveripaddress, port, wallcontent);
+            sock.send(checksumpacket);
+            while (!packets.isEmpty()) {
+                DatagramPacket packet = packets.pop();
+                sock.send(packet);
+            }
+            String checksum = Protocol.KEYWORDS[Protocol.CHECKSUM_COMMAND];
+            byte data[] = checksum.getBytes();
+            checksumpacket = new DatagramPacket(data, data.length, serveripaddress, port);
+            sock.send(checksumpacket);
+        }
     }
 }
