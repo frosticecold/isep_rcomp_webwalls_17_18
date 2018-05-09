@@ -54,6 +54,15 @@ public class Wall {
         StringBuilder sb = new StringBuilder();
         for (Entry<Integer, String> entry : map.entrySet()) {
             sb.append("[").append(entry.getKey()).append("] ")
+                    .append(entry.getValue()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public String wallContentToHTML() {
+        StringBuilder sb = new StringBuilder();
+        for (Entry<Integer, String> entry : map.entrySet()) {
+            sb.append("[").append(entry.getKey()).append("] ")
                     .append(entry.getValue()).append("<p></p>");
         }
         return sb.toString();
@@ -61,6 +70,10 @@ public class Wall {
 
     public byte[] wallContentBytes() {
         return wallContent().getBytes();
+    }
+
+    public byte[] wallContentBytesToHTLM() {
+        return wallContentToHTML().getBytes();
     }
 
 }
