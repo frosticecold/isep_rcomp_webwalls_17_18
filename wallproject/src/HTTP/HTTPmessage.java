@@ -33,7 +33,8 @@ public class HTTPmessage {
         {".js", "application/javascript"},
         {".txt", "text/plain"},
         {".gif", "image/gif"},
-        {".png", "image/png"}
+        {".png", "image/png"},
+        {".css", "text/css"}
     };
 
     static private String readHeaderLine(DataInputStream in) throws IOException {

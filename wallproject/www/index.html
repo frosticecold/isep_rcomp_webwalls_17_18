@@ -1,132 +1,321 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Chat - RCOMPleto/20</title>
-    <script src="script.js"></script>
+  <meta charset="utf-8"></meta>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  ></meta>
+
+  <meta
+    name="description"
+    content=""
+  ></meta>
+
+  <meta
+    name="author"
+    content=""
+  ></meta>
+
+  <link
+    rel="shortcut icon"
+    type="image/x-icon"
+    href="favicon.ico"
+  ></link>
+
+  <title>RCOMPleto /20</title>
+
+  <!-- Bootstrap core CSS -->
+
+  <link
+    href="vendor/bootstrap/css/bootstrap.min.css"
+    rel="stylesheet"
+  ></link>
+
+  <!-- Custom styles for this template -->
+
+  <link
+    href="css/scrolling-nav.css"
+    rel="stylesheet"
+  ></link>
+
+  <script src="js/script.js"></script>
 </head>
 
-<head>
-    <style>
-        body {
-            font: 12px arial;
-            color: #222;
-            text-align: center;
-            padding: 35px;
-        }
+<body
+  id="page-top"
+  onload="loadAndStart()"
+>
+  <!-- Navigation -->
 
-        form,
-        p,
-        span {
-            margin: 0;
-            padding: 0;
-        }
+  <nav
+    class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+    id="mainNav"
+  >
+    <a
+      class="navbar-brand js-scroll-trigger"
+      href="https://www.isep.ipp.pt/"
+    >
+      <img
+        src="img/Isep-logo.png"
+        height="40"
+      >
+    </a>
 
-        input {
-            font: 12px arial;
-        }
+    <div class="container">
+      <a
+        class="navbar-brand js-scroll-trigger"
+        href="#page-top"
+      >RCOMPleto /20</a>
 
-        a {
-            color: #0000FF;
-            text-decoration: none;
-        }
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        a:hover {
-            text-decoration: underline;
-        }
+      <div
+        class="collapse navbar-collapse"
+        id="navbarResponsive"
+      >
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link js-scroll-trigger"
+              href="#chat"
+            >Chat</a>
+          </li>
 
-        #wrapper,
-        #loginform {
-            margin: 0 auto;
-            padding-bottom: 25px;
-            background: #EBF4FB;
-            width: 504px;
-            border: 1px solid #ACD8F0;
-        }
+          <li class="nav-item">
+            <a
+              class="nav-link js-scroll-trigger"
+              href="#services"
+            >Serviços</a>
+          </li>
 
-        #chatbox {
-            text-align: left;
-            margin: 0 auto;
-            margin-top: 15px;
-            margin-bottom: 25px;
-            padding: 10px;
-            background: #fff;
-            height: 270px;
-            width: 430px;
-            border: 1px solid #ACD8F0;
-            overflow: auto;
-        }
+          <li class="nav-item">
+            <a
+              class="nav-link js-scroll-trigger"
+              href="#contact"
+            >Contactos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-        #wallname {
-            width: 395px;
-            border: 1px solid #ACD8F0;
-        }
+  <header class="bg-primary text-white">
+    <div class="container text-center">
+      <h1>
+        <img src="img/rcompleto_logo.png">
+      </h1>
 
-        #usermsg {
-            width: 395px;
-            border: 1px solid #ACD8F0;
-        }
+      <p class="lead">
+        Network application developed in C, Java, JavaScript, Ajax and Html.
+      </p>
+    </div>
+  </header>
 
-        #msgid {
-            margin-top: 5px;
-            width: 15px;
-            border: 1px solid #ACD8F0;
-        }
+  <section id="chat">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Chat</h2>
 
-        #submit {
-            width: 60px;
-        }
+          <hr>
+          <center></center>
 
-        .error {
-            color: #ff0000;
-        }
+          <body>
+            <div id="wrapper">
+              <div id="menu">
+                <p class="welcome">
+                  Welcome,
 
-        #menu {
-            padding: 12.5px 25px 12.5px 25px;
-        }
+                  <b></b>
+                </p>
 
-        .welcome {
-            float: left;
-        }
+                <p></p>
+                <div style="clear:both"></div>
+              </div>
 
-        .msgln {
-            margin: 0 0 2px 0;
-        }
-    </style>
-</head>
+              <div name="wallselector">
+                <input
+                  name="wallname"
+                  type="text"
+                  id="idwall"
+                  size="63"
+                ></input>
 
-<body onload="loadAndStart()">
-    <div id="wrapper">
-        <div id="menu">
-            <p class="welcome">Welcome,
-                <b></b>
-            </p>
-            <p></p>
-            <div style="clear:both"></div>
+                <input
+                  name="wallButton"
+                  type="submit"
+                  id="wallButton"
+                  value="Find"
+                  onclick="updateWall()"
+                ></input>
+              </div>
+
+              <div id="chatbox">
+                <output
+                  name="submitmsg"
+                  type="submit"
+                  id="wallcontent"
+                ></output>
+              </div>
+
+              <div name="message">
+                <input
+                  name="usermsg"
+                  type="text"
+                  id="usermsg"
+                  size="63"
+                ></input>
+
+                <input
+                  name="submitmsg"
+                  type="submit"
+                  id="submitmsg"
+                  value="Send"
+                  onclick="sendMessageToWall()"
+                ></input>
+              </div>
+
+              <div name="deleteMessageBlock">
+                <input
+                  name="messageNumber"
+                  type="text"
+                  id="msgid"
+                  size="15"
+                ></input>
+
+                <input
+                  name="submitmessageNumber"
+                  type="submit"
+                  id="msgnumbutton"
+                  value="Delete"
+                  onclick="deleteMessageFromWall()"
+                ></input>
+              </div>
+            </div>
+          </body>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div name="wallselector">
-            <input name="wallname" type="text" id="idwall" size="63" />
-            <input name="wallButton" type="submit" id="wallButton" value="Find" onclick="updateWall()" />
-        </div>
+  <section
+    id="services"
+    class="bg-light"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Services we offer</h2>
 
-        <div id="chatbox">
-            <output name="submitmsg" type="submit" id="wallcontent" />
-            <p class="messageWall">
-                <b></b>WALLS GOES HERE</p>
+          <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.
+          </p>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div name="message">
-            <input name="usermsg" type="text" id="usermsg" size="63" />
-            <input name="submitmsg" type="submit" id="submitmsg" value="Send" onclick="sendMessageToWall()" />
-        </div>
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Contactos</h2>
 
-        <div name="deleteMessageBlock">
-            <input name="messageNumber" type="text" id="msgid" size="15" />
-            <input name="submitmessageNumber" type="submit" id="msgnumbutton" value="Delete" onclick="deleteMessageFromWall()" />
+          <p class="lead">
+            <img
+              src="img/mail_icon.png"
+              alt="Contact me!"
+            >
+
+            <a href="mailto:1040862@isep.ipp.pt?Subject=WebWalls">André Oliveira</a>
+
+            <br>
+
+            <img
+              src="img/mail_icon.png"
+              alt="Contact me!"
+            >
+
+            <a href="mailto:1090657@isep.ipp.pt?Subject=WebWalls">Raúl Correia</a>
+
+            <br>
+
+            <img
+              src="img/mail_icon.png"
+              alt="Contact me!"
+            >
+
+            <a href="mailto:1150344@isep.ipp.pt?Subject=WebWalls">Rui Ribeiro</a>
+
+            <br>
+
+            <img
+              src="img/mail_icon.png"
+              alt="Contact me!"
+            >
+
+            <a href="mailto:1151708@isep.ipp.pt?Subject=WebWalls">Mário Dias</a>
+
+            <br>
+
+            <img
+              src="img/mail_icon.png"
+              alt="Contact me!"
+            >
+
+            <a href="mailto:1161386@isep.ipp.pt?Subject=WebWalls">Miguel Santos</a>
+
+            <br>
+            <br>
+
+            <img
+              src="img/mail_icon.png"
+              alt="Contact me!"
+            >
+
+            <a href="mailto:1161386@isep.ipp.pt,1151708@isep.ipp.pt,1150344@isep.ipp.pt,1090657@isep.ipp.pt,1040862@isep.ipp.pt?Subject=WebWalls">Dev Team</a>
+          </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">
+        Copyright &copy; RCOMPleto /20 - 2018
+
+        <br>
+        ISEP - Instituto Superior de Engenharia do Porto
+
+        <br>
+        RCOMP - Redes e Computadores
+      </p>
     </div>
 
-</body>
+    <!-- /.container -->
+  </footer>
 
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Custom JavaScript for this theme -->
+  <script src="js/scrolling-nav.js"></script>
+</body>
 </html>
