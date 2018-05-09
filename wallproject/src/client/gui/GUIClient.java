@@ -6,8 +6,9 @@
 package client.gui;
 
 import client.Client;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import jdk.nashorn.internal.codegen.CompilerConstants;
 
 /**
  *
@@ -15,10 +16,12 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
  */
 public class GUIClient extends javax.swing.JFrame {
 
-    private Client client;
-    private String wallname;
-
+    private static Client client;
+    private static String wallname;
     private static GUIClient instance;
+    private static Thread refreshThread;
+    private static String message = "";
+    private static final int NUMBER_OF_CHARS = 150;
 
     /**
      * Creates new form GUIClient
@@ -153,7 +156,12 @@ public class GUIClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        client.sendMessage(inputxtarea.getText());
+        if (inputxtarea.getText().length() <= NUMBER_OF_CHARS) {
+            client.sendMessage(inputxtarea.getText());
+            message = inputxtarea.getText();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error the limit is: " + NUMBER_OF_CHARS + " characters.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
@@ -177,6 +185,7 @@ public class GUIClient extends javax.swing.JFrame {
     public void enableChat() {
         this.sendButton.setEnabled(true);
         this.inputxtarea.setEnabled(true);
+        refreshWallThread();
     }
 
     public static GUIClient getInstance() {
@@ -188,6 +197,10 @@ public class GUIClient extends javax.swing.JFrame {
         return wallname;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public void changeWallText(final String text) {
         this.chattxtarea.setText(text);
     }
@@ -197,6 +210,31 @@ public class GUIClient extends javax.swing.JFrame {
         this.chattxtarea.setText(null);
         this.sendButton.setEnabled(false);
         this.inputxtarea.setEnabled(false);
+    }
+
+    public void showSuccess() {
+        JOptionPane.showMessageDialog(this, "Successfully sent message!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void refreshWallThread() {
+        if (refreshThread == null) {
+            Runnable run = new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            client.sendGetWall(wallname);
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(GUIClient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            };
+            refreshThread = new Thread(run);
+            refreshThread.start();
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -212,4 +250,5 @@ public class GUIClient extends javax.swing.JFrame {
     private javax.swing.JButton sendButton;
     private javax.swing.JButton settingsButton;
     // End of variables declaration//GEN-END:variables
+
 }

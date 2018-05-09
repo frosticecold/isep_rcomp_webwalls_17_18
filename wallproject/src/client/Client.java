@@ -36,7 +36,14 @@ public class Client {
     }
 
     public void sendMessage(final String message) {
-        udp_client.sendMessage(message);
+        if (message == null || message.isEmpty()) {
+            return;
+        }
+        if (message.charAt(0) == Protocol.STARTING_COMMAND) {
+            udp_client.sendMessage(message);
+        } else {
+            
+        }
     }
 
     public void sendHello() {

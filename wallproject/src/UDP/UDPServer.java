@@ -215,7 +215,7 @@ public class UDPServer implements Runnable {
             DatagramPacket packet = packets.pop();
             sock.send(packet);
         }
-        String checksum = Protocol.KEYWORDS[Protocol.CHECKSUM_COMMAND];
+        String checksum = Protocol.getCommand(Protocol.CHECKSUM_SERVER_COMMAND);
         byte data[] = checksum.getBytes();
         checksumpacket = new DatagramPacket(data, data.length, request.getAddress(), request.getPort());
         sock.send(checksumpacket);
