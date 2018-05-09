@@ -22,7 +22,7 @@ public class GUIClient extends javax.swing.JFrame {
     private static GUIClient instance;
     private static Thread refreshThread;
     private static String message = "";
-    private static final int NUMBER_OF_CHARS = 150;
+    private static final int NUMBER_OF_CHARS = 155;
 
     /**
      * Creates new form GUIClient
