@@ -27,6 +27,7 @@ public class UDPServer implements Runnable {
     private static DatagramSocket sock;
 
     private static volatile boolean execute = true;
+    private static final int BUFFER_SIZE = 300;
 
     public UDPServer() {
         try {
@@ -41,7 +42,7 @@ public class UDPServer implements Runnable {
     @Override
     public void run() {
         System.out.println("Listening for UDP requests (IPv6/IPv4). Use CTRL+C to terminate the server.");
-        byte[] buffer = new byte[Settings.UDP_PACKET_SIZE];
+        byte[] buffer = new byte[BUFFER_SIZE];
         /**
          * Buffer *
          */
@@ -79,7 +80,7 @@ public class UDPServer implements Runnable {
                  *
                  *
                  */
-                buffer = new byte[Settings.UDP_PACKET_SIZE];
+                buffer = new byte[BUFFER_SIZE];
             } catch (IOException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }

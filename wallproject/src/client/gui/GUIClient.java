@@ -58,6 +58,7 @@ public class GUIClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wall Application");
 
+        chattxtarea.setEditable(false);
         chattxtarea.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(chattxtarea);
 
