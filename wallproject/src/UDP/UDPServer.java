@@ -134,12 +134,13 @@ public class UDPServer implements Runnable {
                         if (args.length == 5) {
                             if (args[3].equals("@msg")) {
                                 String wallname = args[1];
-                                int messagecontent = Integer.parseInt(args[2]);
+                                int messageheader = Integer.parseInt(args[2]);
                                 String msgcontent = args[4];
+                                int receivedmessagesize = msgcontent.length();
                                 /**
                                  * If received full message then add and confirm
                                  */
-                                if (messagecontent == msgcontent.length()) {
+                                if (messageheader == receivedmessagesize) {
                                     WallManager.getInstance().findOrCreateWall(wallname);
                                     boolean ret = WallManager.getInstance().addMessageToWall(wallname, msgcontent);
                                     if (ret == true) {
