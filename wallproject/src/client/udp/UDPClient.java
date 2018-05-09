@@ -37,7 +37,9 @@ public class UDPClient implements Runnable {
     private static int expectedSize = 0;
     private static int currentByteCount = 0;
 
-    private static List<String> contentlist = new ArrayList<>();
+    private static String content = "";
+
+    private static final int BUFFER_SIZE = 300;
 
     public UDPClient(String ip) {
         try {
@@ -55,12 +57,13 @@ public class UDPClient implements Runnable {
     @Override
     public void run() {
         try {
-            byte[] data = new byte[300];
+            byte[] data = new byte[BUFFER_SIZE];
             String frase;
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
             System.out.println("Getting information...");
             while (execute) {
                 sock.receive(udpPacket);
+                int udp_length = udpPacket.getLength();
                 frase = new String(udpPacket.getData(), 0, udpPacket.getLength());
                 System.out.println("Received reply: " + frase);
 
@@ -68,6 +71,7 @@ public class UDPClient implements Runnable {
                  * Interpretar resposta
                  */
                 Interpreter.resolve(udpPacket);
+
             }
             sock.close();
         } catch (SocketTimeoutException ex) {
@@ -89,11 +93,12 @@ public class UDPClient implements Runnable {
     }
 
     public void sendMessage(final String message) {
-        if (message != null) {
+        if (message != null && !message.isEmpty()) {
             try {
                 byte[] data = message.getBytes();
                 DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
                 sock.send(udp);
+                System.out.println("Message: " + message);
                 System.out.println("Sent message to: " + serverIP.getHostAddress());
             } catch (IOException ex) {
                 Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,28 +108,29 @@ public class UDPClient implements Runnable {
     }
 
     public void sendHello() {
-        try {
-            byte[] data = "@hello".getBytes();
-            DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
-            sock.send(udp);
-        } catch (IOException ex) {
-            Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendMessage("@hello");
+    }
+
+    public static void resetValues() {
+        expectedSize = 0;
+        currentByteCount = 0;
+        content = "";
     }
 
     static class Interpreter {
 
         static void resolve(DatagramPacket packet) {
-            byte[] data = packet.getData();
-            String line = new String(data).trim();
+            String line = new String(packet.getData(), 0, packet.getLength());
             if (!line.isEmpty()) {
                 String[] args = line.split(Protocol.MSG_SPLITTER);
-                resolveCommands(args);
-                resolveContent(args);
+                if (resolveCommands(args) == false) {
+                    resolveContent(args);
+                }
             }
         }
 
-        static void resolveCommands(String[] args) {
+        static boolean resolveCommands(String[] args) {
+            boolean iscommand = false;
             if (args[0].charAt(0) == Protocol.STARTING_COMMAND) {
                 String command = args[0];
                 switch (command) {
@@ -132,10 +138,25 @@ public class UDPClient implements Runnable {
                     case "@hello":
                         GUIClient.getInstance().enableChat();
                         System.out.println("Enabling chat...");
+                        iscommand = true;
+                        resetValues();
                         break;
+                    case "@checksum":
+                        if (currentByteCount == expectedSize) {
+                            GUIClient.getInstance().changeWallText(content);
+                            System.out.println("Successfully received message.");
+                        } else {
+                            final String currentWall = GUIClient.getInstance().getCurrentWallName();
+                            String resend_command = Protocol.buildErrorResend(currentWall);
+                            client.Client.getInstance().sendMessage(resend_command);
 
+                            resetValues();
+                        }
+                        iscommand = true;
+                        break;
                 }
             }
+            return iscommand;
         }
 
         static void resolveContent(String[] args) {
@@ -154,9 +175,11 @@ public class UDPClient implements Runnable {
                  * Senão é porque é conteúdo e adicionar à lista
              */
 
-            if (args[0].charAt(0) == Protocol.MSG_INDEX) {
-                contentlist.add(args[1]);
-                currentByteCount = args[1].getBytes().length;
+            if (args[0].equals(Protocol.MSG_TOTAL_CONTENT)) {
+                expectedSize = Integer.parseInt(args[1]);
+            } else {
+                content += args[0];
+                currentByteCount += args[0].getBytes().length;
             }
 
         }

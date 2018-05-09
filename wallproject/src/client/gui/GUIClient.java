@@ -7,16 +7,17 @@ package client.gui;
 
 import client.Client;
 import javax.swing.JOptionPane;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 public class GUIClient extends javax.swing.JFrame {
-    
+
     private Client client;
     private String wallname;
-    
+
     private static GUIClient instance;
 
     /**
@@ -53,9 +54,7 @@ public class GUIClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wall Application");
 
-        chattxtarea.setEditable(false);
         chattxtarea.setBackground(new java.awt.Color(255, 255, 255));
-        chattxtarea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane2.setViewportView(chattxtarea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -162,28 +161,37 @@ public class GUIClient extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void menuitem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_exitActionPerformed
-        // TODO add your handling code here:
+        application.Application.exit();
+        this.dispose();
     }//GEN-LAST:event_menuitem_exitActionPerformed
-    
+
     public void newConnection(final String ip) {
         client.newConnection(ip);
     }
-    
+
     public void setWallname(final String wallname) {
         this.wallname = wallname;
         Client.getInstance().sendGetWall(wallname);
     }
-    
+
     public void enableChat() {
         this.sendButton.setEnabled(true);
         this.inputxtarea.setEnabled(true);
     }
-    
+
     public static GUIClient getInstance() {
         return instance;
-        
+
     }
-    
+
+    public String getCurrentWallName() {
+        return wallname;
+    }
+
+    public void changeWallText(final String text) {
+        this.chattxtarea.setText(text);
+    }
+
     public void disableChat() {
         this.inputxtarea.setText(null);
         this.chattxtarea.setText(null);

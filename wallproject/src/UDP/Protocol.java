@@ -17,7 +17,7 @@ public class Protocol {
     public static final char MSG_INDEX = '#';
     public static final char HEADER_FILLER = '?';
     public static final String MSG_TOTAL_CONTENT = "#!";
-    
+
     public static final String KEYWORDS[] = {"@hello", "@getwall", "@confirm", "@error@resend", "@success", "@checksum"};
     public static final String NUMBER_SPLITTER = "/";
     public static final String MSG_SPLITTER = ";";
@@ -39,5 +39,21 @@ public class Protocol {
 
     public static String buildGetWallCommand(final String wallname) {
         return Protocol.KEYWORDS[Protocol.GETWALL_COMMAND] + MSG_SPLITTER + wallname;
+    }
+
+    public static String getCommand(final int indexOfCommand) {
+        return KEYWORDS[indexOfCommand];
+
+    }
+
+    public static String buildErrorResend(final String wallname) {
+
+        return KEYWORDS[ERROR_RESEND_COMMAND] + MSG_SPLITTER + wallname;
+
+    }
+
+    public static String buildTotalChecksumPacket(final byte data[]) {
+
+        return Protocol.MSG_TOTAL_CONTENT + MSG_SPLITTER + data.length + MSG_SPLITTER;
     }
 }

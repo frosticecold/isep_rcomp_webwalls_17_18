@@ -23,11 +23,11 @@ import java.util.logging.Logger;
  * @author Raúl Correia
  */
 public class UDPServer implements Runnable {
-
+    
     private static DatagramSocket sock;
-
+    
     private static volatile boolean execute = true;
-
+    
     public UDPServer() {
         try {
             sock = new DatagramSocket(Settings.UDP_PORT);
@@ -35,9 +35,9 @@ public class UDPServer implements Runnable {
             Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
-
+        
     }
-
+    
     @Override
     public void run() {
         System.out.println("Listening for UDP requests (IPv6/IPv4). Use CTRL+C to terminate the server.");
@@ -81,20 +81,21 @@ public class UDPServer implements Runnable {
                  *
                  *
                  */
+                buffer = new byte[Settings.UDP_PACKET_SIZE];
             } catch (IOException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
         }
-
+        
     }
-
-    public void exitServer() {
+    
+    public void exit() {
         execute = false;
     }
-
+    
     static class Interpreter {
-
+        
         static void resolve(DatagramPacket request) {
             byte[] data = request.getData();
             String line = new String(data).trim();
@@ -107,7 +108,7 @@ public class UDPServer implements Runnable {
                 }
             }
         }
-
+        
         static void resolveCommands(DatagramPacket request, String[] args) throws IOException {
             if (args[0].charAt(0) == Protocol.STARTING_COMMAND) {
                 String command = args[0];
@@ -119,33 +120,33 @@ public class UDPServer implements Runnable {
                         sock.send(udp);
                     }
                     break;
-
+                    
                     case "@getwall": {
                         if (args.length > 1) {
                             if (!args[1].isEmpty()) {
-                                String strwall = WallManager.getInstance().getWallInformation(args[1]);
+                                //String strwall = WallManager.getInstance().getWallInformation(args[1]);
                                 byte[] wallcontent = WallManager.getInstance().getWallInformationBytes(args[1]);
                                 LinkedList<DatagramPacket> datagrampackets = buildMultipleMessage(request, wallcontent);
                                 System.out.printf("Sending %d messages\n", datagrampackets.size());
-                                sendMultiplePackets(datagrampackets);
+                                sendMultiplePackets(request, wallcontent, datagrampackets);
                             }
                         }
                     }
                     break;
-
+                    
                 }
             }
         }
     }
-
+    
     static LinkedList<DatagramPacket> buildMultipleMessage(DatagramPacket request, byte[] content) {
-
+        
         LinkedList<DatagramPacket> ll_packets = new LinkedList<>();
         int indexContent = 0;
         int indexPacket = 1;
-
+        
         final int UDP_BODY_SIZE = Settings.UDP_PACKET_SIZE - Settings.UDP_PACKET_HEADER;
-
+        
         boolean finished = false;
         LinkedList<byte[]> splitWallInformation = splitWallInformation(content, UDP_BODY_SIZE);
         while (!splitWallInformation.isEmpty()) {
@@ -155,6 +156,14 @@ public class UDPServer implements Runnable {
             ll_packets.add(packet);
         }
         return ll_packets;
+    }
+    
+    private static DatagramPacket buildChecksumPacket(DatagramPacket request, byte[] wallcontent) {
+        
+        String str = Protocol.buildTotalChecksumPacket(wallcontent);
+        byte[] data = str.getBytes();
+        return new DatagramPacket(data, data.length, request.getAddress(), request.getPort());
+        
     }
 
     /*
@@ -186,7 +195,7 @@ public class UDPServer implements Runnable {
         do {
             if (data.length > UDP_BODY_SIZE) {
                 byte[] udp_packet = Arrays.copyOfRange(data, startingIndex, endIndex);
-                data = Arrays.copyOfRange(data, endIndex + 1, data.length);
+                data = Arrays.copyOfRange(data, endIndex, data.length);
                 content.add(udp_packet);
             } else {
                 content.add(data);
@@ -195,11 +204,20 @@ public class UDPServer implements Runnable {
         } while (running);
         return content;
     }
-
-    private static void sendMultiplePackets(LinkedList<DatagramPacket> packets) throws IOException {
+    
+    private static void sendMultiplePackets(DatagramPacket request, byte[] wallcontent, LinkedList<DatagramPacket> packets) throws IOException {
+        /**
+         * Send how much information we going to send
+         */
+        DatagramPacket checksumpacket = buildChecksumPacket(request, wallcontent);
+        sock.send(checksumpacket);
         while (!packets.isEmpty()) {
             DatagramPacket packet = packets.pop();
             sock.send(packet);
         }
+        String checksum = Protocol.KEYWORDS[Protocol.CHECKSUM_COMMAND];
+        byte data[] = checksum.getBytes();
+        checksumpacket = new DatagramPacket(data, data.length, request.getAddress(), request.getPort());
+        sock.send(checksumpacket);
     }
 }
