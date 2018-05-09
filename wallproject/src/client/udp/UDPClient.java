@@ -89,11 +89,12 @@ public class UDPClient implements Runnable {
     }
 
     public void sendMessage(final String message) {
-        if (message != null) {
+        if (message != null && !message.isEmpty()) {
             try {
                 byte[] data = message.getBytes();
                 DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
                 sock.send(udp);
+                System.out.println("Message: " + message);
                 System.out.println("Sent message to: " + serverIP.getHostAddress());
             } catch (IOException ex) {
                 Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,13 +104,7 @@ public class UDPClient implements Runnable {
     }
 
     public void sendHello() {
-        try {
-            byte[] data = "@hello".getBytes();
-            DatagramPacket udp = new DatagramPacket(data, data.length, serverIP, Settings.UDP_PORT);
-            sock.send(udp);
-        } catch (IOException ex) {
-            Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendMessage("@hello");
     }
 
     static class Interpreter {

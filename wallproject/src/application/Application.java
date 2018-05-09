@@ -8,8 +8,10 @@ package application;
 import client.gui.GUIClient;
 import HTTP.HTTPServer;
 import UDP.UDPServer;
+import client.Client;
 import domain.WallManager;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,18 +20,19 @@ import java.util.logging.Logger;
  * @author Raúl Correia
  */
 public class Application {
-    
+
+    public static volatile boolean running = true;
     public static Settings settings;
     public static HTTPServer http_server;
     public static Thread http_thread;
     public static UDPServer udp_server;
     public static Thread udp_thread;
-    
+
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Error: no parameters.");
         }
-        
+
         WallManager.getInstance().findOrCreateWall("TestWall");
         WallManager.getInstance().addMessageToWall("TestWall", "This is a test message");
         try {
@@ -38,17 +41,18 @@ public class Application {
             System.out.println("Error: couldn't load settings");
         }
         decide(args);
-        while (true) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        Scanner scan = new Scanner(System.in);
+        while (running) {
+            System.out.printf("Please input a command<exit>>");
+            String command = scan.nextLine();
+            if (command.matches("exit")) {
+                exit();
             }
         }
     }
-    
+
     private static void decide(String[] args) {
-        
+
         if (args.length == 0) {
             System.out.println("Error: no arguments");
             System.exit(1);
@@ -70,10 +74,18 @@ public class Application {
                         System.out.println("Running UDPClient thread on server IP: ");
                     }
                 } else {
-                    System.exit(1); 
+                    System.exit(1);
                 }
             }
         }
     }
-    
+
+    public static void exit() {
+        running = false;
+        udp_server.exit();
+        http_server.exit();
+        Client.udp_client.exit();
+        System.exit(0);
+    }
+
 }

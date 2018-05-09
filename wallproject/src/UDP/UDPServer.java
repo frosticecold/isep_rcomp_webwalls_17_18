@@ -89,7 +89,7 @@ public class UDPServer implements Runnable {
 
     }
 
-    public void exitServer() {
+    public void exit() {
         execute = false;
     }
 

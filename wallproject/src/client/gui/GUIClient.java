@@ -7,6 +7,7 @@ package client.gui;
 
 import client.Client;
 import javax.swing.JOptionPane;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 /**
  *
@@ -162,7 +163,8 @@ public class GUIClient extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void menuitem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_exitActionPerformed
-        // TODO add your handling code here:
+        application.Application.exit();
+        this.dispose();
     }//GEN-LAST:event_menuitem_exitActionPerformed
     
     public void newConnection(final String ip) {
@@ -182,6 +184,10 @@ public class GUIClient extends javax.swing.JFrame {
     public static GUIClient getInstance() {
         return instance;
         
+    }
+    
+    public void setText(final String text) {
+        this.chattxtarea.setText(text);
     }
     
     public void disableChat() {

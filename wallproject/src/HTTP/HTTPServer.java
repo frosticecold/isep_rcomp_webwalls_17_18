@@ -23,6 +23,7 @@ public class HTTPServer implements Runnable {
 
     static private final String BASE_FOLDER = "www";
     static private ServerSocket sock;
+    private static volatile boolean running = true;
 
     public static void main(String args[]) throws Exception {
         Socket cliSock;
@@ -44,7 +45,7 @@ public class HTTPServer implements Runnable {
             System.out.println("Server failed to open local port " + args[0]);
             System.exit(1);
         }
-        while (true) {
+        while (running) {
             cliSock = sock.accept();
             HTTPRequest req = new HTTPRequest(cliSock, BASE_FOLDER);
             req.start();
@@ -78,7 +79,7 @@ public class HTTPServer implements Runnable {
         Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
         return wall;
     }
-    
+
     public static synchronized void castVote(String i) {
         int cN;
         try {
@@ -96,16 +97,17 @@ public class HTTPServer implements Runnable {
     public void run() {
         try {
             Socket cliSock;
-            
+
             accessesCounter = 0;
             for (int i = 0; i < candidatesNumber; i++) {
                 candidateName[i] = "Candidate " + i;
                 candidateVotes[i] = 0;
             }
-            
+
             sock = new ServerSocket(Settings.TCP_PORT);
-            while (true) {
+            while (running) {
                 cliSock = sock.accept();
+                printRequest(cliSock);
                 HTTPRequest req = new HTTPRequest(cliSock, BASE_FOLDER);
                 req.start();
                 incAccessesCounter();
@@ -113,5 +115,13 @@ public class HTTPServer implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(HTTPServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void printRequest(Socket clientsocket) {
+        System.out.printf("HTTP Request from: %s:%d\n", clientsocket.getInetAddress().getHostAddress(), clientsocket.getPort());
+    }
+
+    public void exit() {
+        running = false;
     }
 }
