@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package client.gui;
+
+import client.Client;
 
 /**
  *
@@ -12,13 +14,14 @@ package GUI;
 public class SettingsUIDialog extends javax.swing.JDialog {
 
     private GUIClient ui;
+
     /**
      * Creates new form SettingsUIDialog
      */
     public SettingsUIDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.ui=(GUIClient) parent;
+        this.ui = (GUIClient) parent;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -42,9 +45,14 @@ public class SettingsUIDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        serveriptxtarea.setText("jTextField1");
+        serveriptxtarea.setText("127.0.0.1");
+        serveriptxtarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serveriptxtareaActionPerformed(evt);
+            }
+        });
 
-        wallnametxtarea.setText("jTextField2");
+        wallnametxtarea.setText("TestWall");
 
         serveripLabel.setText("Server IP");
 
@@ -127,16 +135,20 @@ public class SettingsUIDialog extends javax.swing.JDialog {
 
         String wallname = "";
         if (!wallnameLabel.getText().isEmpty()) {
-            wallname = wallnameLabel.getText();
+            wallname = wallnametxtarea.getText();
         }
 
         if (valid) {
             ui.newConnection(ip);
+            Client.getInstance().sendHello();
             ui.setWallname(wallname);
-            ui.enableChat();
             this.dispose();
         }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void serveriptxtareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serveriptxtareaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serveriptxtareaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

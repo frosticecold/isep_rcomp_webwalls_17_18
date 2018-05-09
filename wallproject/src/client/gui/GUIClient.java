@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package client.gui;
 
-import application.Client;
+import client.Client;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,14 +16,17 @@ public class GUIClient extends javax.swing.JFrame {
     
     private Client client;
     private String wallname;
+    
+    private static GUIClient instance;
 
     /**
      * Creates new form GUIClient
      */
     public GUIClient() {
         initComponents();
-        client = new Client();
+        client = Client.getInstance();
         setVisible(true);
+        instance = this;
     }
 
     /**
@@ -161,18 +164,24 @@ public class GUIClient extends javax.swing.JFrame {
     private void menuitem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_exitActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuitem_exitActionPerformed
-
-    public void newConnection(final String ip){
+    
+    public void newConnection(final String ip) {
         client.newConnection(ip);
     }
     
-    public void setWallname(final String wallname){
-        this.wallname=wallname;
+    public void setWallname(final String wallname) {
+        this.wallname = wallname;
+        Client.getInstance().sendGetWall(wallname);
     }
     
     public void enableChat() {
         this.sendButton.setEnabled(true);
         this.inputxtarea.setEnabled(true);
+    }
+    
+    public static GUIClient getInstance() {
+        return instance;
+        
     }
     
     public void disableChat() {
@@ -189,7 +198,6 @@ public class GUIClient extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuItem menuitem_exit;
