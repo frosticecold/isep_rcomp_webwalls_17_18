@@ -6,7 +6,7 @@ var delWall;
 var wallRefresh;
 
 function loadAndStart() {
-  delWall= document.getElementById("idDeleteWall");
+  delWall = document.getElementById("idDeleteWall");
   mArea = document.getElementById("wallcontent");
   message = document.getElementById("usermsg");
   msgNum = document.getElementById("msgid");
@@ -16,9 +16,11 @@ function loadAndStart() {
 }
 
 function updateWall() {
+  
   var request = new XMLHttpRequest();
   mArea.style.color = "black";
-  
+  wallRefresh = wall.value;
+  console.log(wallRefresh);
   request.onload = function() {
     mArea.innerHTML = this.responseText;
     mArea.scrollTop = mArea.scrollHeight; // scroll the textarea to make last lines visible
@@ -44,38 +46,47 @@ function updateWall() {
   // Message 0 is a server's greeting, it should always exist
   // no timeout, for following messages, the server responds only when the requested
   // message number exists
-  if(wall.value!==""){
+  if (wall.value !== "") {
     request.send();
   }
+
+
 }
 
 function sendMessageToWall() {
   var request = new XMLHttpRequest();
-  request.open("POST", "/walls/" + wall.value + "/" + message.value, true);
-  if(message.value!==""){
+  request.open("POST", "/walls/" + wallRefresh+ "/" + message.value, true);
+  if (message.value !== "") {
     request.send();
     updateWall();
   }
-  message.value="";
+  message.value = "";
 }
 
 function deleteMessageFromWall() {
-    var request = new XMLHttpRequest();
-    request.open("DELETE", "/walls/" + wall.value + "/" + message.value + "/" + msgNum.value, true);
-    if(msgNum.value!==""){
-      request.send();
-      updateWall();
-    }
-    msgNum.value="";
+  var request = new XMLHttpRequest();
+  request.open(
+    "DELETE",
+    "/walls/" + wall.value + "/" + message.value + "/" + msgNum.value,
+    true
+  );
+  if (msgNum.value !== "") {
+    request.send();
+    updateWall();
   }
+  msgNum.value = "";
+}
 
 function deleteWall() {
-    var request = new XMLHttpRequest();
-    request.open("DELETE", "/walls/delete/" + delWall.value, true);
-    if(delWall.value!==""){
-      request.send();
-      updateWall();
+  var request = new XMLHttpRequest();
+  request.open("DELETE", "/walls/delete/" + delWall.value, true);
+  if (delWall.value !== "") {
+    request.send();
+    updateWall();
+    if(delWall.value === wall.value){
+      wall.value="";
     }
-
-    delWall.value="";
   }
+
+  delWall.value = "";
+}

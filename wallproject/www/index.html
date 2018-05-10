@@ -96,14 +96,14 @@
               </div>
 
               <div name="wallselector">
-                <input name="wallname" type="text" id="idwall" size="63"></input>
+                <input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off"></input>
                 <a class="button" onclick="updateWall()">
                   <span>Find/Create Wall</span>
                 </a>
               </div>
 
               <div name="wallDelete">
-                <input name="wallname" type="text" id="idDeleteWall" size="63"></input>
+                <input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off"></input>
                 <a class="button" onclick="deleteWall()">
                   <span>Delete Wall</span>
                 </a>
@@ -114,7 +114,7 @@
               </div>
 
               <div name="message">
-                <input name="usermsg" type="text" id="usermsg" size="63"></input>
+                <input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off"> </input>
                 <a class="button" onclick="sendMessageToWall()">
                   <span>Send</span>
                 </a>
@@ -122,9 +122,12 @@
               </div>
 
               <div name="deleteMessageBlock">
-                <input name="messageNumber" type="text" id="msgid" size="15"></input>
-
-                <input name="submitmessageNumber" type="submit" id="msgnumbutton" value="Delete" onclick="deleteMessageFromWall()"></input>
+                <input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off">
+                    <a class="button" onclick="deleteMessageFromWall()">
+                      <span>Delete</span>
+                    </a>
+                </input>
+                
               </div>
             </div>
           </body>
