@@ -26,7 +26,11 @@
 
   <link href="css/scrolling-nav.css" rel="stylesheet"></link>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+ <script language="javascript" type="text/javascript" src="js/Effects/sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="js/Effects/vehicle.js"></script>
   <script src="js/script.js"></script>
+
 </head>
 
 <body id="page-top" onload="loadAndStart()">
@@ -47,8 +51,9 @@
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+          
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#chat">Chat</a>
+            <a class="nav-link js-scroll-trigger" onload="draw()"></a>
           </li>
 
           <li class="nav-item">
@@ -62,8 +67,11 @@
       </div>
     </div>
   </nav>
-
+              
+    
+   
   <header class="bg-primary text-white">
+       
     <div class="container text-center">
       <h1 class="glitch"></h1>>
       <img src="rcompleto_logo.png" position="absolute">
@@ -78,7 +86,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Chat</h2>
+          <h2>
+	           <a id="sketch-holder" class="nav-link js-scroll-trigger" onload="draw()"></a>
+            </h2>
 
           <hr>
           <center></center>
@@ -141,7 +151,6 @@
       <div class="row">
         <div class="col-lg-8 mx-auto">
           <h2>Services we offer</h2>
-
           <p class="lead">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea
             consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.
