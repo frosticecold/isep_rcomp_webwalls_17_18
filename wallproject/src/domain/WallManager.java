@@ -58,11 +58,8 @@ public class WallManager {
      * @return True or False
      */
     public synchronized boolean addMessageToWall(final String nameOfWall, final String message) {
-        if (mapOfWalls.containsKey(nameOfWall)) {
-            Wall w = mapOfWalls.get(nameOfWall);
-            return w.addMessage(message);
-        }
-        return false;
+        Wall wall = findOrCreateWall(nameOfWall);
+        return wall.addMessage(message);
     }
 
     /**
@@ -104,7 +101,7 @@ public class WallManager {
      * @param nameOfWall
      * @return
      */
-    public  String getWallInformation(final String nameOfWall) {
+    public String getWallInformation(final String nameOfWall) {
         Wall w = findOrCreateWall(nameOfWall);
         return w.wallContent();
     }
@@ -115,19 +112,20 @@ public class WallManager {
      * @param nameOfWall
      * @return
      */
-    public  byte[] getWallInformationBytes(final String nameOfWall) {
+    public byte[] getWallInformationBytes(final String nameOfWall) {
         if (mapOfWalls.containsKey(nameOfWall)) {
             return mapOfWalls.get(nameOfWall).wallContentBytes();
         }
         return new byte[0];
     }
+
     /**
      * Gets a wall information in a preformatted html string
      *
      * @param nameOfWall
      * @return
      */
-    public  String getWallInformationHTML(final String nameOfWall) {
+    public String getWallInformationHTML(final String nameOfWall) {
         Wall w = findOrCreateWall(nameOfWall);
         return w.wallContentToHTML();
     }
@@ -138,7 +136,7 @@ public class WallManager {
      * @param nameOfWall
      * @return
      */
-    public  byte[] getWallInformationBytesHTML(final String nameOfWall) {
+    public byte[] getWallInformationBytesHTML(final String nameOfWall) {
         if (mapOfWalls.containsKey(nameOfWall)) {
             return mapOfWalls.get(nameOfWall).wallContentBytesToHTLM();
         }
