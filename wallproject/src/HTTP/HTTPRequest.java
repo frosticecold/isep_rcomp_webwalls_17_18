@@ -39,10 +39,11 @@ public HTTPRequest(Socket s, String f) {
 
         if (request.getURI().startsWith("/walls/")) {
             String uri[] = request.getURI().split("/");
-
+            if(uri.length>=2){
             Wall wall = WallManager.getInstance().findOrCreateWall(uri[2]);
             response.setContentFromWall(wall, "text/html");
             response.setResponseStatus("200 Ok");
+            }
         } else {
             String fullname = baseFolder + "/";
             if (request.getURI().equals("/")) {
