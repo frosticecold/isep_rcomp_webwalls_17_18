@@ -41,6 +41,11 @@ public class UDPClient implements Runnable {
 
     private static final int BUFFER_SIZE = 300;
 
+    /**
+     * Creates a new UDPClient based on the ip
+     *
+     * @param ip IP
+     */
     public UDPClient(String ip) {
         try {
             serverIP = InetAddress.getByName(ip);
@@ -84,14 +89,27 @@ public class UDPClient implements Runnable {
         System.out.println("Exit...");
     }
 
+    /**
+     * Returns the server ip
+     *
+     * @return the server ip as string
+     */
     public String getServerIP() {
         return serverIP.getHostAddress();
     }
 
+    /**
+     * Exit
+     */
     public void exit() {
         execute = false;
     }
 
+    /**
+     * Message to be sent by the UDPClient to the server
+     *
+     * @param message the message
+     */
     public void sendMessage(final String message) {
         if (message != null && !message.isEmpty()) {
             try {
@@ -110,6 +128,11 @@ public class UDPClient implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param wallname Wall Name
+     * @param message Message
+     */
     public void sendWallMessageWithHeader(final String wallname, final String message) {
         if (message != null && !message.isEmpty()) {
             try {
@@ -129,10 +152,16 @@ public class UDPClient implements Runnable {
         }
     }
 
+    /**
+     *
+     */
     public void sendHello() {
         sendMessage("@hello");
     }
 
+    /**
+     *
+     */
     public static void resetValues() {
         expectedSize = 0;
         currentByteCount = 0;

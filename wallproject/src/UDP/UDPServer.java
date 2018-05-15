@@ -11,10 +11,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,7 +90,11 @@ public class UDPServer implements Runnable {
     public void exit() {
         execute = false;
     }
-
+    
+    /**
+     * Class to interpret the commands provided
+     * 
+     */
     static class Interpreter {
 
         static void resolve(DatagramPacket request) {

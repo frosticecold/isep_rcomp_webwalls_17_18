@@ -39,12 +39,16 @@ public class HTTPServer implements Runnable {
     }
 
     // DATA ACCESSED BY THREADS - LOCKING REQUIRED
+    /**
+     * Method to find or create a wall 
+     * 
+     * @param wallname Wallname
+     * @return the wall created
+     */
     public static synchronized Wall getWallStandingInHTML(String wallname) {
         Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
         return wall;
     }
-
- 
 
     @Override
     public void run() {

@@ -12,8 +12,6 @@ import client.Client;
 import domain.WallManager;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,6 +26,11 @@ public class Application {
     public static UDPServer udp_server;
     public static Thread udp_thread;
 
+    /**
+     * Main method with a test wall named TestWall with a message.
+     *
+     * @param args server or client instance
+     */
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Error: no parameters.");
@@ -51,6 +54,11 @@ public class Application {
         }
     }
 
+    /**
+     * Decide if is running a server or client
+     * 
+     * @param args server or client
+     */
     private static void decide(String[] args) {
 
         if (args.length == 0) {
@@ -80,6 +88,9 @@ public class Application {
         }
     }
 
+    /**
+     *
+     */
     public static void exit() {
         running = false;
         udp_server.exit();

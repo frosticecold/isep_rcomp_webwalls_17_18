@@ -46,26 +46,57 @@ public class Protocol {
         return null;
     }
 
+    /**
+     * : @getwall;wallname
+     *
+     * @param wallname Wallname
+     * @return "@getwall;wallname"
+     */
     public static String buildGetWallCommand(final String wallname) {
         return Protocol.KEYWORDS[Protocol.GETWALL_COMMAND] + MSG_SPLITTER + wallname;
     }
 
+    /**
+     * Returns the command in the specified index
+     *
+     * @param indexOfCommand Command index
+     * @return the command in the specified index
+     */
     public static String getCommand(final int indexOfCommand) {
         return KEYWORDS[indexOfCommand];
 
     }
 
+    /**
+     * : @error@resend@wall;wallname
+     *
+     * @param wallname Wallname
+     * @return "@error@resend@wall;wallname"
+     */
     public static String buildErrorResendWall(final String wallname) {
 
         return KEYWORDS[ERROR_RESEND_COMMAND] + KEYWORDS[WALL_COMMAND] + MSG_SPLITTER + wallname;
 
     }
 
+    /**
+     * : #!;data.length;
+     *
+     * @param data Data
+     * @return "#!;data.length;"
+     */
     public static String buildTotalChecksumPacket(final byte data[]) {
 
         return Protocol.MSG_TOTAL_CONTENT + MSG_SPLITTER + data.length + MSG_SPLITTER;
     }
 
+    /**
+     * : @wall;wallname;message.length;@msg;message
+     *
+     * @param wallname Wall name
+     * @param message Message
+     * @return "@wall;wallname;message.length;@msg;message"
+     */
     public static String buildWallAndMessageCommand(final String wallname, final String message) {
 
         String content = KEYWORDS[WALL_MSG_COMMAND].replaceFirst("%wall", wallname);
@@ -75,6 +106,12 @@ public class Protocol {
         return content.trim();
     }
 
+    /**
+     * : @failed
+     *
+     * @param wallname Wallname
+     * @return "@failed"
+     */
     public static String buildErrorFailed(final String wallname) {
         String msg = KEYWORDS[FAILED_COMMAND];
         return msg;

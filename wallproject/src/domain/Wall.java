@@ -106,7 +106,7 @@ public class Wall {
     /**
      * Returns the wall content in bytes
      *
-     * @return
+     * @return wall content in bytes
      */
     public byte[] wallContentBytes() {
         return wallContent().getBytes();
@@ -115,7 +115,7 @@ public class Wall {
     /**
      * Returns the wall content formated in html in bytes
      *
-     * @return
+     * @return wall content formated in html in bytes
      */
     public byte[] wallContentBytesToHTML() {
         return wallContentToHTML().getBytes();

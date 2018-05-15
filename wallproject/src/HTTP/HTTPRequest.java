@@ -23,11 +23,18 @@ public class HTTPRequest extends Thread {
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HTTPRequest(Socket s, String f) {
+public HTTPRequest(Socket s, String f) {
         baseFolder = f;
         sock = s;
     }
-
+    
+    /**
+     * Method to obtain the wall
+     * 
+     * @param request
+     * @param response
+     * @throws IOException 
+     */
     private void methodGet(HTTPmessage request, HTTPmessage response) throws IOException {
 
         if (request.getURI().startsWith("/walls/")) {
@@ -54,7 +61,15 @@ public class HTTPRequest extends Thread {
         }
         response.send(outS);
     }
-
+    
+    
+    /**
+     * Method to delete a wall
+     * 
+     * @param request
+     * @param response
+     * @throws IOException 
+     */
     private void methodDelete(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/delete/")) {
             System.out.println("Ola");
@@ -86,7 +101,15 @@ public class HTTPRequest extends Thread {
         }
         response.send(outS);
     }
-
+    
+    
+    /**
+     * Method to post on the wall
+     * 
+     * @param request
+     * @param response
+     * @throws IOException 
+     */
     private void methodPost(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("POST") && request.getURI().startsWith("/walls/")) {
             String uri[] = request.getURI().split("/");
@@ -109,7 +132,11 @@ public class HTTPRequest extends Thread {
         }
         response.send(outS);
     }
-
+    
+    /**
+     * Decision on what method is being used
+     * 
+     */
     public void run() {
         try {
             outS = new DataOutputStream(sock.getOutputStream());

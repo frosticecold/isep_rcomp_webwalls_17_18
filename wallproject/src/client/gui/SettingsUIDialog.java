@@ -17,6 +17,8 @@ public class SettingsUIDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form SettingsUIDialog
+     * @param parent parent window
+     * @param modal modal
      */
     public SettingsUIDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

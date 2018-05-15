@@ -14,7 +14,14 @@ import client.udp.UDPClient;
  */
 public class Client {
 
+    /**
+     *  UDP Client
+     */
     public static UDPClient udp_client;
+
+    /**
+     *  UDP Thread
+     */
     public static Thread udp_thread;
 
     private static Client instance;
@@ -22,6 +29,11 @@ public class Client {
     private Client() {
     }
 
+    /**
+     * Instance of Client
+     *
+     * @return Client
+     */
     public static Client getInstance() {
         if (instance == null) {
             instance = new Client();
@@ -29,12 +41,22 @@ public class Client {
         return instance;
     }
 
+    /**
+     * Provides a new connection to the UDP Thread
+     *
+     * @param ip IP
+     */
     public void newConnection(final String ip) {
         udp_client = new UDPClient(ip);
         udp_thread = new Thread(udp_client);
         udp_thread.start();
     }
 
+    /**
+     * Sends a message
+     *
+     * @param message Message
+     */
     public void sendMessage(final String message) {
         if (message == null || message.isEmpty()) {
             return;
@@ -45,6 +67,12 @@ public class Client {
 
     }
 
+    /**
+     * Sends a message to a wall
+     *
+     * @param wallname Wall
+     * @param message Message
+     */
     public void sendMessageToWall(final String wallname, final String message) {
         if (message == null || message.isEmpty()) {
             return;
@@ -53,14 +81,26 @@ public class Client {
         udp_client.sendWallMessageWithHeader(wallname,message);
     }
 
+    /**
+     * Functionality test @Hello
+     *
+     */
     public void sendHello() {
         udp_client.sendHello();
     }
 
+    /**
+     * Sends @getwall;wallname message
+     *
+     * @param wallname Wall Name
+     */
     public void sendGetWall(final String wallname) {
         udp_client.sendMessage(Protocol.buildGetWallCommand(wallname));
     }
 
+    /**
+     * Exit
+     */
     public void exit() {
         udp_client.exit();
     }

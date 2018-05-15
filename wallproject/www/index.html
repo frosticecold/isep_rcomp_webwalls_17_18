@@ -1,237 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8"></meta>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
-
-  <meta name="description" content=""></meta>
-
-  <meta name="author" content=""></meta>
-
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
-
-  <title>RCOMPleto /20</title>
-
-  <!-- Bootstrap core CSS -->
-
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
-
-  <link href="http://fonts.googleapis.com/css?family=Cabin:400,500,600,bold" rel="stylesheet" type="text/css">
-
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:regular,bold" rel="stylesheet" type="text/css">
-
-  <!-- Custom styles for this template -->
-
-  <link href="css/scrolling-nav.css" rel="stylesheet"></link>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
-<script language="javascript" type="text/javascript" src="js/Effects/drawWithMouse.js"></script>
- <script language="javascript" type="text/javascript" src="js/Effects/sketch.js"></script>
-  <script language="javascript" type="text/javascript" src="js/Effects/vehicle.js"></script>
-
-  <script src="js/script.js"></script>
-
-</head>
-
-<body id="page-top" onload="loadAndStart()">
-  <!-- Navigation -->
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand js-scroll-trigger" href="https://www.isep.ipp.pt/">
-      <img src="img/Isep-logo.png" height="40">
-    </a>
-
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">RCOMPleto /20</a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" onload="draw()"></a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Serviços</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contactos</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-              
-    
-   
-  <header class="bg-primary text-white">
-       
-    <div class="container text-center">
-      <h1 class="glitch"></h1>>
-      <img src="rcompleto_logo.png" position="absolute">
-      </h1>
-      <p class="lead">
-        Network application developed in C, Java, JavaScript, Ajax and Html.
-      </p>
-    </div>
-  </header>
-
-  <section id="chat">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <h2>
-	           <a id="sketch-holder" class="nav-link js-scroll-trigger" onload="draw()"></a>
-            </h2>
-
-          <hr>
-          <center></center>
-
-          <body>
-            <div id="wrapper">
-              <div id="menu">
-                <p class="welcome">
-                  Welcome,
-                  <b></b>
-                </p>
-
-                <p></p>
-                <div style="clear:both"></div>
-              </div>
-
-              <div name="wallselector">
-                <input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off"></input>
-                <a class="button" onclick="updateWall()">
-                  <span>Find/Create Wall</span>
-                </a>
-              </div>
-
-              <div name="wallDelete">
-                <input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off"></input>
-                <a class="button" onclick="deleteWall()">
-                  <span>Delete Wall</span>
-                </a>
-              </div>
-
-              <div id="chatbox">
-                <output name="submitmsg" type="submit" id="wallcontent"></output>
-              </div>
-
-              <div name="message">
-                <input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off"> </input>
-                <a class="button" onclick="sendMessageToWall()">
-                  <span>Send</span>
-                </a>
-
-              </div>
-
-              <div name="deleteMessageBlock">
-                <input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off">
-                    <a class="button" onclick="deleteMessageFromWall()">
-                      <span>Delete</span>
-                    </a>
-                </input>
-                
-              </div>
-            </div>
-          </body>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" class="bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <h2>Services we offer</h2>
-          <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea
-            consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <h2>Contactos</h2>
-
-          <p class="lead">
-            <img src="img/mail_icon.png" alt="Contact me!">
-
-            <a href="mailto:1040862@isep.ipp.pt?Subject=WebWalls">André Oliveira</a>
-
-            <br>
-
-            <img src="img/mail_icon.png" alt="Contact me!">
-
-            <a href="mailto:1090657@isep.ipp.pt?Subject=WebWalls">Raúl Correia</a>
-
-            <br>
-
-            <img src="img/mail_icon.png" alt="Contact me!">
-
-            <a href="mailto:1150344@isep.ipp.pt?Subject=WebWalls">Rui Ribeiro</a>
-
-            <br>
-
-            <img src="img/mail_icon.png" alt="Contact me!">
-
-            <a href="mailto:1151708@isep.ipp.pt?Subject=WebWalls">Mário Dias</a>
-
-            <br>
-
-            <img src="img/mail_icon.png" alt="Contact me!">
-
-            <a href="mailto:1161386@isep.ipp.pt?Subject=WebWalls">Miguel Santos</a>
-
-            <br>
-            <br>
-
-            <img src="img/mail_icon.png" alt="Contact me!">
-
-            <a href="mailto:1161386@isep.ipp.pt,1151708@isep.ipp.pt,1150344@isep.ipp.pt,1090657@isep.ipp.pt,1040862@isep.ipp.pt?Subject=WebWalls">Dev Team</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">
-        Copyright &copy; RCOMPleto /20 - 2018
-
-        <br> ISEP - Instituto Superior de Engenharia do Porto
-
-        <br> RCOMP - Redes e Computadores
-      </p>
-    </div>
-
-    <!-- /.container -->
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <!-- Custom JavaScript for this theme -->
-  <script src="js/scrolling-nav.js"></script>
-</body>
-
+	<head>
+		<meta charset="utf-8">
+		</meta>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		</meta>
+		<meta name="description" content="">
+		</meta>
+		<meta name="author" content="">
+		</meta>
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		</link>
+		<title>RCOMPleto /20</title>
+		<!-- Bootstrap core CSS -->
+		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		</link>
+		<link href="http://fonts.googleapis.com/css?family=Cabin:400,500,600,bold" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:regular,bold" rel="stylesheet" type="text/css">
+		<!-- Custom styles for this template -->
+		<link href="css/scrolling-nav.css" rel="stylesheet">
+		</link>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+		<script language="javascript" type="text/javascript" src="js/Effects/drawWithMouse.js"></script>
+		<script language="javascript" type="text/javascript" src="js/Effects/sketch.js"></script>
+		<script language="javascript" type="text/javascript" src="js/Effects/vehicle.js"></script>
+		<script src="js/script.js"></script>
+	</head>
+	<body id="page-top" onload="loadAndStart()">
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+			<a class="navbar-brand js-scroll-trigger" href="https://www.isep.ipp.pt/">
+			<img src="img/Isep-logo.png" height="40">
+			</a>
+			<div class="container">
+				<a class="navbar-brand js-scroll-trigger" href="#page-top">RCOMPleto /20</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#chat" onload="draw()">Chat</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#services">Serviços</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="#contact">Contactos</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<header class="bg-primary text-white">
+			<div class="container text-center">
+				<h1 class="glitch"></h1>
+				<img src="rcompleto_logo.png" position="absolute">
+				</h1>
+				<p class="lead">
+					Network application developed in Java, JavaScript, Ajax and Html.
+				</p>
+			</div>
+		</header>
+		<section id="chat">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 mx-auto">
+						<h2>
+							<a id="sketch-holder" class="nav-link js-scroll-trigger" onload="draw()"></a>
+						</h2>
+						<hr>
+						<body>
+							<div id="wrapper">
+								<div id="menu">
+									<p class="welcome">
+										Welcome,
+										<b></b>
+									</p>
+									<p></p>
+									<div style="clear:both"></div>
+								</div>
+								<div name="wallselector">
+									<input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off"></input>
+									<a class="button" onclick="updateWall()">
+									<span>Find/Create Wall</span>
+									</a>
+									<script>
+										var input = document.getElementById("idwall");
+										input.addEventListener("keyup", function(event) {
+											event.preventDefault();
+											if (event.keyCode === 13) {
+												updateWall();
+											}
+										});
+									</script>
+								</div>
+								<div name="wallDelete">
+									<input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off"></input>
+									<a class="button" onclick="deleteWall()">
+									<span>Delete Wall</span>
+									</a>
+									<script>
+										var input = document.getElementById("idDeleteWall");
+										input.addEventListener("keyup", function(event) {
+											event.preventDefault();
+											if (event.keyCode === 13) {
+												deleteWall();
+											}
+										});
+									</script>
+								</div>
+								<div id="chatbox">
+									<output name="submitmsg" type="submit" id="wallcontent"></output>
+								</div>
+								<div name="message">
+									<input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off"> </input>
+									<a class="button" onclick="sendMessageToWall()">
+									<span>Send</span>
+									</a>
+									<script>
+										var input = document.getElementById("usermsg");
+										input.addEventListener("keyup", function(event) {
+											event.preventDefault();
+											if (event.keyCode === 13) {
+												sendMessageToWall();
+											}
+										});
+									</script>
+								</div>
+								<div name="deleteMessageBlock">
+									<input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off">
+									<a class="button" onclick="deleteMessageFromWall()">
+									<span>Delete</span>
+									</a>
+									</input>
+									<script>
+										var input = document.getElementById("msgid");
+										input.addEventListener("keyup", function(event) {
+											event.preventDefault();
+											if (event.keyCode === 13) {
+												deleteMessageFromWall();
+											}
+										});
+									</script>
+								</div>
+							</div>
+	</body>
+	</div>
+	</div>
+	</div>
+	</section>
+	<section id="services" class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2>Services we offer</h2>
+					<p class="lead">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea
+						consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2>Contactos</h2>
+					<p class="lead">
+						<img src="img/mail_icon.png" alt="Contact me!">
+						<a href="mailto:1040862@isep.ipp.pt?Subject=WebWalls">André Oliveira</a>
+						<br>
+						<img src="img/mail_icon.png" alt="Contact me!">
+						<a href="mailto:1090657@isep.ipp.pt?Subject=WebWalls">Raúl Correia</a>
+						<br>
+						<img src="img/mail_icon.png" alt="Contact me!">
+						<a href="mailto:1150344@isep.ipp.pt?Subject=WebWalls">Rui Ribeiro</a>
+						<br>
+						<img src="img/mail_icon.png" alt="Contact me!">
+						<a href="mailto:1151708@isep.ipp.pt?Subject=WebWalls">Mário Dias</a>
+						<br>
+						<img src="img/mail_icon.png" alt="Contact me!">
+						<a href="mailto:1161386@isep.ipp.pt?Subject=WebWalls">Miguel Santos</a>
+						<br>
+						<br>
+						<img src="img/mail_icon.png" alt="Contact me!">
+						<a href="mailto:1161386@isep.ipp.pt,1151708@isep.ipp.pt,1150344@isep.ipp.pt,1090657@isep.ipp.pt,1040862@isep.ipp.pt?Subject=WebWalls">Dev Team</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer -->
+	<footer class="py-5 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">
+				Copyright &copy; RCOMPleto /20 - 2018
+				<br> ISEP - Instituto Superior de Engenharia do Porto
+				<br> RCOMP - Redes e Computadores
+			</p>
+		</div>
+		<!-- /.container -->
+	</footer>
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Plugin JavaScript -->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom JavaScript for this theme -->
+	<script src="js/scrolling-nav.js"></script>
+	</body>
 </html>

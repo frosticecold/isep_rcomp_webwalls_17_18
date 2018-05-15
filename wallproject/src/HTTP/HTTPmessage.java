@@ -74,8 +74,8 @@ public class HTTPmessage {
     /**
      * Creates a new HTTPmessage by receiving it from an DataInputStream
      *
-     * @param in
-     * @throws IOException
+     * @param in DataInputStream
+     * @throws IOException IOException
      */
     public HTTPmessage(DataInputStream in) throws IOException {
         String firstLine = readHeaderLine(in);
@@ -121,6 +121,9 @@ public class HTTPmessage {
         }
     }
 
+    /**
+     *  Creates an empty HTTPmessage
+     */
     public HTTPmessage() {
         isRequest = true;
         method = null;
@@ -130,21 +133,44 @@ public class HTTPmessage {
         contentType = null;
     }
 
+    /**
+     * Sets the response status
+     * 
+     * @param sT status
+     */
     public void setResponseStatus(String sT) {
         isRequest = false;
         status = sT;
     }
 
+    /**
+     * Sets the HTTPmessage content with a type
+     *
+     * @param cnt content
+     * @param cType content type
+     */
     public void setContent(String cnt, String cType) {
         content = cnt.getBytes();
         contentType = cType;
     }
 
+    /**
+     * Sets the request method
+     * 
+     * @param m method
+     */
     public void setRequestMethod(String m) {
         isRequest = true;
         method = m;
     }
 
+    /**
+     * Sends the HTTPmessage to the DataOutputStream
+     * 
+     * @param out dataoutputstream
+     * @return true if sent, false if not
+     * @throws IOException ioexception
+     */
     public boolean send(DataOutputStream out) throws IOException {
         if (isRequest) {
             if (method == null || uri == null) {
@@ -175,30 +201,65 @@ public class HTTPmessage {
         return true;
     }
 
+    /**
+     * Returns the HTTPmessage method
+     * 
+     * @return method
+     */
     public String getMethod() {
         return method;
     }
 
+    /**
+     * Returns the HTTPmessage URI
+     * 
+     * @return uri
+     */
     public String getURI() {
         return uri;
     }
 
+    /**
+     * Returns the HTTPmessage status
+     *
+     * @return status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Sets the HTTPmessage URI
+     *
+     * @param u uri
+     */
     public void setURI(String u) {
         uri = u;
     }
 
+    /**
+     * Verifies if the HTTPmessage has content
+     *
+     * @return true if has content, false if not
+     */
     public boolean hasContent() {
         return (content != null);
     }
 
+    /**
+     * Returns the content as a string
+     *
+     * @return content as string
+     */
     public String getContentAsString() {
         return (new String(content));
     }
 
+    /**
+     * Returns the content as bytes
+     *
+     * @return content as bytes
+     */
     public byte[] getContent() {
         return (content);
     }
@@ -207,14 +268,20 @@ public class HTTPmessage {
      * Settles the HTTP message’s content-type (ct) and the content from a
      * provided string (c).
      *
-     * @param c
-     * @param ct
+     * @param c content
+     * @param ct content type
      */
     public void setContentFromString(String c, String ct) {
         content = c.getBytes();
         contentType = ct;
     }
 
+    /**
+     * Sets the content of the HTTPmessage that's in a wall
+     * 
+     * @param wall wall
+     * @param ct content
+     */
     public void setContentFromWall(Wall wall, String ct) {
         content = wall.wallContentBytesToHTML();
         contentType = ct;
@@ -225,8 +292,8 @@ public class HTTPmessage {
      * filename. Returns false if fails to read the file. On success, this
      * method also settles the content type for a few known file extensions.
      *
-     * @param fname
-     * @return
+     * @param fname file name
+     * @return true or false
      */
     public boolean setContentFromFile(String fname) {
         File f = new File(fname);

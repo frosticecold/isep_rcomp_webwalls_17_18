@@ -43,7 +43,7 @@ public class WallManager {
     /**
      * Returns or creates a WallManager instance
      *
-     * @return
+     * @return WallManager
      */
     public static WallManager getInstance() {
         if (instance == null) {
@@ -72,8 +72,8 @@ public class WallManager {
      * <p>
      * By design we don't create a new wall if it doesn't exist
      *
-     * @param nameOfWall
-     * @param message
+     * @param nameOfWall Wall Name
+     * @param message message
      * @return True or False
      */
     public synchronized boolean addMessageToWall(final String nameOfWall, final String message) {
@@ -84,8 +84,8 @@ public class WallManager {
     /**
      * Removes a message from a Wall by Wall name and message number
      *
-     * @param nameOfWall
-     * @param indexOfMessage
+     * @param nameOfWall Wall Name
+     * @param indexOfMessage message index
      * @return True or False
      */
     public synchronized boolean removeMessageFromWall(final String nameOfWall, final int indexOfMessage) {
@@ -99,8 +99,8 @@ public class WallManager {
     /**
      * Method that if a wall doesnt exist, creates a new one with that name
      *
-     * @param nameOfWall
-     * @return
+     * @param nameOfWall Wall Name
+     * @return Wall
      */
     public synchronized Wall findOrCreateWall(final String nameOfWall) {
         Wall w;
@@ -118,8 +118,8 @@ public class WallManager {
     /**
      * Gets a wall information in a preformatted String
      *
-     * @param nameOfWall
-     * @return
+     * @param nameOfWall Wall Name
+     * @return Wall content
      */
     public String getWallInformation(final String nameOfWall) {
         Wall w = findOrCreateWall(nameOfWall);
@@ -129,8 +129,8 @@ public class WallManager {
     /**
      * Returns a wall information in bytes
      *
-     * @param nameOfWall
-     * @return
+     * @param nameOfWall Wall Name
+     * @return Wall content in bytes
      */
     public byte[] getWallInformationBytes(final String nameOfWall) {
         if (mapOfWalls.containsKey(nameOfWall)) {
@@ -142,8 +142,8 @@ public class WallManager {
     /**
      * Gets a wall information in a preformatted html string
      *
-     * @param nameOfWall
-     * @return
+     * @param nameOfWall Wall Name
+     * @return wall content in formatted html
      */
     public String getWallInformationHTML(final String nameOfWall) {
         Wall w = findOrCreateWall(nameOfWall);
@@ -153,8 +153,8 @@ public class WallManager {
     /**
      * Returns a wall information in bytes to html format
      *
-     * @param nameOfWall
-     * @return
+     * @param nameOfWall Wall Name
+     * @return wall content in bytes html formatted
      */
     public byte[] getWallInformationBytesHTML(final String nameOfWall) {
         if (mapOfWalls.containsKey(nameOfWall)) {
@@ -166,7 +166,7 @@ public class WallManager {
     /**
      * Retrns the number of Walls
      *
-     * @return
+     * @return Number of walls
      */
     public int howManyWallsExist() {
         return numberOfWalls;
