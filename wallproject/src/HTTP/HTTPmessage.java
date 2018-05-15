@@ -216,7 +216,7 @@ public class HTTPmessage {
     }
 
     public void setContentFromWall(Wall wall, String ct) {
-        content = wall.wallContentBytesToHTLM();
+        content = wall.wallContentBytesToHTML();
         contentType = ct;
     }
 

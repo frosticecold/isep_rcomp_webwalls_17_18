@@ -21,14 +21,30 @@ public class WallManager {
      */
     private Map<String, Wall> mapOfWalls;
 
+    /**
+     * Only instance of WallManager
+     *
+     */
     private static WallManager instance;
 
+    /**
+     * Number of walls exist
+     *
+     */
     private static int numberOfWalls = 0;
 
+    /**
+     * Empty constructor for singleton
+     */
     protected WallManager() {
         mapOfWalls = new HashMap<>();
     }
 
+    /**
+     * Returns or creates a WallManager instance
+     *
+     * @return
+     */
     public static WallManager getInstance() {
         if (instance == null) {
             instance = new WallManager();
@@ -45,6 +61,7 @@ public class WallManager {
      */
     public synchronized boolean removeWallByName(final String name) {
         if (mapOfWalls.containsKey(name)) {
+            numberOfWalls--;
             return mapOfWalls.remove(name) != null;
         }
         return false;
@@ -141,7 +158,7 @@ public class WallManager {
      */
     public byte[] getWallInformationBytesHTML(final String nameOfWall) {
         if (mapOfWalls.containsKey(nameOfWall)) {
-            return mapOfWalls.get(nameOfWall).wallContentBytesToHTLM();
+            return mapOfWalls.get(nameOfWall).wallContentBytesToHTML();
         }
         return new byte[0];
     }
