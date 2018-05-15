@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -44,10 +46,10 @@
 							<a class="nav-link js-scroll-trigger" href="#chat" onload="draw()">Chat</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="#services">Serviços</a>
+							<a class="nav-link js-scroll-trigger" href="#services">Services</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="#contact">Contactos</a>
+							<a class="nav-link js-scroll-trigger" href="#contact">Contacts</a>
 						</li>
 					</ul>
 				</div>
@@ -65,151 +67,157 @@
 		</header>
 		<section id="chat">
 			<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2>
+						<a id="sketch-holder" class="nav-link js-scroll-trigger" onload="draw()"></a>
+					</h2>
+					<div id="wrapper">
+						<div id="menu">
+							<p class="welcome">
+								Welcome,
+								<b></b>
+							</p>
+							<p />
+							<div style="clear:both" />
+							</div>
+							<div name="wallselector">
+								<input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off"></input>
+								<a class="button" onclick="updateWall()">
+								<span>Find/Create Wall</span>
+								</a>
+								<script>
+									var input = document.getElementById("idwall");
+									input.addEventListener("keyup", function(event) {
+										event.preventDefault();
+										if (event.keyCode === 13) {
+											updateWall();
+										}
+									});
+								</script>
+							</div>
+							<div name="wallDelete">
+								<input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off"></input>
+								<a class="button" onclick="deleteWall()">
+								<span>Delete Wall</span>
+								</a>
+								<script>
+									var input = document.getElementById("idDeleteWall");
+									input.addEventListener("keyup", function(event) {
+										event.preventDefault();
+										if (event.keyCode === 13) {
+											deleteWall();
+										}
+									});
+								</script>
+							</div>
+							<div id="chatbox">
+								<output name="submitmsg" type="submit" id="wallcontent"></output>
+							</div>
+							<div name="message">
+								<input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off"> </input>
+								<a class="button" onclick="sendMessageToWall()">
+								<span>Send</span>
+								</a>
+								<script>
+									var input = document.getElementById("usermsg");
+									input.addEventListener("keyup", function(event) {
+										event.preventDefault();
+										if (event.keyCode === 13) {
+											sendMessageToWall();
+										}
+									});
+								</script>
+							</div>
+							<div name="deleteMessageBlock">
+								<input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off"> </input>
+								<a class="button" onclick="deleteMessageFromWall()">
+								<span>Delete</span>
+								</a>
+								<script>
+									var input = document.getElementById("msgid");
+									input.addEventListener("keyup", function(event) {
+										event.preventDefault();
+										if (event.keyCode === 13) {
+											deleteMessageFromWall();
+										}
+									});
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="services" class="bg-light">
+			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 mx-auto">
-						<h2>
-							<a id="sketch-holder" class="nav-link js-scroll-trigger" onload="draw()"></a>
-						</h2>
-						<hr>
-						<body>
-							<div id="wrapper">
-								<div id="menu">
-									<p class="welcome">
-										Welcome,
-										<b></b>
-									</p>
-									<p></p>
-									<div style="clear:both"></div>
-								</div>
-								<div name="wallselector">
-									<input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off"></input>
-									<a class="button" onclick="updateWall()">
-									<span>Find/Create Wall</span>
-									</a>
-									<script>
-										var input = document.getElementById("idwall");
-										input.addEventListener("keyup", function(event) {
-											event.preventDefault();
-											if (event.keyCode === 13) {
-												updateWall();
-											}
-										});
-									</script>
-								</div>
-								<div name="wallDelete">
-									<input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off"></input>
-									<a class="button" onclick="deleteWall()">
-									<span>Delete Wall</span>
-									</a>
-									<script>
-										var input = document.getElementById("idDeleteWall");
-										input.addEventListener("keyup", function(event) {
-											event.preventDefault();
-											if (event.keyCode === 13) {
-												deleteWall();
-											}
-										});
-									</script>
-								</div>
-								<div id="chatbox">
-									<output name="submitmsg" type="submit" id="wallcontent"></output>
-								</div>
-								<div name="message">
-									<input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off"> </input>
-									<a class="button" onclick="sendMessageToWall()">
-									<span>Send</span>
-									</a>
-									<script>
-										var input = document.getElementById("usermsg");
-										input.addEventListener("keyup", function(event) {
-											event.preventDefault();
-											if (event.keyCode === 13) {
-												sendMessageToWall();
-											}
-										});
-									</script>
-								</div>
-								<div name="deleteMessageBlock">
-									<input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off">
-									<a class="button" onclick="deleteMessageFromWall()">
-									<span>Delete</span>
-									</a>
-									</input>
-									<script>
-										var input = document.getElementById("msgid");
-										input.addEventListener("keyup", function(event) {
-											event.preventDefault();
-											if (event.keyCode === 13) {
-												deleteMessageFromWall();
-											}
-										});
-									</script>
-								</div>
-							</div>
-	</body>
-	</div>
-	</div>
-	</div>
-	</section>
-	<section id="services" class="bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2>Services we offer</h2>
-					<p class="lead">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea
-						consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.
-					</p>
+						<h2>Services we offer</h2>
+						<p class="lead">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea
+							consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	<section id="contact">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2>Contactos</h2>
-					<p class="lead">
-						<img src="img/mail_icon.png" alt="Contact me!">
-						<a href="mailto:1040862@isep.ipp.pt?Subject=WebWalls">André Oliveira</a>
+		</section>
+		<section id="contact">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 mx-auto">
+						<h2>Contacts</h2>
+						<p class="lead">
+						<div class="chip">
+							<img src="img/img_avatar.png" alt="Contact me!">
+							<a href="mailto:1040862@isep.ipp.pt?Subject=WebWalls">André Oliveira</a>
+						</div>
+						<div class="chip">	
+							<img src="img/img_avatar.png" alt="Contact me!">
+							<a href="mailto:1090657@isep.ipp.pt?Subject=WebWalls">Raúl Correia</a>
+						</div>
+						<div class="chip">
+							<img src="img/img_avatar.png" alt="Contact me!">
+							<a href="mailto:1150344@isep.ipp.pt?Subject=WebWalls">Rui Ribeiro</a>
+						</div>
+						<br><br>
+						<div class="chip">
+							<img src="img/img_avatar.png" alt="Contact me!">
+							<a href="mailto:1151708@isep.ipp.pt?Subject=WebWalls">Mário Dias</a>
+						</div>
+						<div class="chip">
+							<img src="img/img_avatar.png" alt="Contact me!">
+							<a href="mailto:1161386@isep.ipp.pt?Subject=WebWalls">Miguel Santos</a>
+						</div>
 						<br>
-						<img src="img/mail_icon.png" alt="Contact me!">
-						<a href="mailto:1090657@isep.ipp.pt?Subject=WebWalls">Raúl Correia</a>
 						<br>
-						<img src="img/mail_icon.png" alt="Contact me!">
-						<a href="mailto:1150344@isep.ipp.pt?Subject=WebWalls">Rui Ribeiro</a>
-						<br>
-						<img src="img/mail_icon.png" alt="Contact me!">
-						<a href="mailto:1151708@isep.ipp.pt?Subject=WebWalls">Mário Dias</a>
-						<br>
-						<img src="img/mail_icon.png" alt="Contact me!">
-						<a href="mailto:1161386@isep.ipp.pt?Subject=WebWalls">Miguel Santos</a>
-						<br>
-						<br>
-						<img src="img/mail_icon.png" alt="Contact me!">
-						<a href="mailto:1161386@isep.ipp.pt,1151708@isep.ipp.pt,1150344@isep.ipp.pt,1090657@isep.ipp.pt,1040862@isep.ipp.pt?Subject=WebWalls">Dev Team</a>
-					</p>
+						<div class="chip">
+							<img src="img/team_avatar2.png" alt="Contact me!">
+							<a href="mailto:1161386@isep.ipp.pt,1151708@isep.ipp.pt,1150344@isep.ipp.pt,1090657@isep.ipp.pt,1040862@isep.ipp.pt?Subject=WebWalls">Dev Team</a>
+						</div>
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">
-				Copyright &copy; RCOMPleto /20 - 2018
-				<br> ISEP - Instituto Superior de Engenharia do Porto
-				<br> RCOMP - Redes e Computadores
-			</p>
-		</div>
-		<!-- /.container -->
-	</footer>
-	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Plugin JavaScript -->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom JavaScript for this theme -->
-	<script src="js/scrolling-nav.js"></script>
+		</section>
+		<!-- Footer -->
+		<footer class="py-5 bg-dark">
+			<div class="container">
+				<p class="m-0 text-center text-white">
+					Copyright &copy; RCOMPleto /20 - 2018
+					<br> ISEP - Instituto Superior de Engenharia do Porto
+					<br> RCOMP - Redes e Computadores
+				</p>
+			</div>
+			<!-- /.container -->
+		</footer>
+		<!-- Bootstrap core JavaScript -->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Plugin JavaScript -->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Custom JavaScript for this theme -->
+		<script src="js/scrolling-nav.js"></script>
 	</body>
 </html>
+
