@@ -23,6 +23,8 @@ public class WallManager {
 
     private static WallManager instance;
 
+    private static int numberOfWalls = 0;
+
     protected WallManager() {
         mapOfWalls = new HashMap<>();
     }
@@ -88,6 +90,7 @@ public class WallManager {
         if (!mapOfWalls.containsKey(nameOfWall)) {
             w = new Wall();
             mapOfWalls.put(nameOfWall, w);
+            numberOfWalls++;
         } else {
             w = mapOfWalls.get(nameOfWall);
         }
@@ -141,6 +144,15 @@ public class WallManager {
             return mapOfWalls.get(nameOfWall).wallContentBytesToHTLM();
         }
         return new byte[0];
+    }
+
+    /**
+     * Retrns the number of Walls
+     *
+     * @return
+     */
+    public int howManyWallsExist() {
+        return numberOfWalls;
     }
 
 }
