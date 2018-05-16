@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Raúl Correia
  */
-public class UDPServer implements Runnable {
+public class UDPServer extends Thread {
 
     private static DatagramSocket sock;
 
@@ -59,26 +59,12 @@ public class UDPServer implements Runnable {
                  */
                 Interpreter.resolve(udpPacket);
                 /**
-                 * get answer length *
+                 * debug info *
                  */
                 System.out.println("UDP Request from: "
                         + udpPacket.getAddress().getHostAddress() + " port: "
                         + udpPacket.getPort());
-                /**
-                 * packet_length = udpPacket.getLength();
-                 *
-                 *
-                 * String ans = new String(udpPacket.getData());
-                 * System.out.println("Message from: " +
-                 * udpPacket.getAddress().getHostAddress() + " " + ans);
-                 * udpPacket.setData(ans.getBytes());
-                 * udpPacket.setLength(ans.getBytes().length);
-                 * sock.send(udpPacket);
-                 *
-                 *
-                 *
-                 */
-                buffer = new byte[BUFFER_SIZE];
+                java.util.Arrays.fill(buffer, (byte)0);
             } catch (IOException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }

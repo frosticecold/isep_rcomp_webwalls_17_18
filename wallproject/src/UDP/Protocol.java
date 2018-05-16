@@ -38,12 +38,7 @@ public class Protocol {
     public static final int MESSAGE_COMMAND = 10;
     public static final int FAILED_COMMAND = 11;
 
-    public Protocol() {
-    }
-
-    public DatagramPacket[] interpret(DatagramPacket source) {
-
-        return null;
+    protected Protocol() {
     }
 
     /**

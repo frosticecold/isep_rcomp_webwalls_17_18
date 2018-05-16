@@ -13,30 +13,11 @@ import java.util.logging.Logger;
  *
  * @author Miguel Santos <1161386@isep.ipp.pt>
  */
-public class HTTPServer implements Runnable {
+public class HTTPServer extends Thread {
 
     static private final String BASE_FOLDER = "www";
     static private ServerSocket sock;
     private static volatile boolean running = true;
-
-    public static void main(String args[]) throws Exception {
-        Socket cliSock;
-        if (args.length != 1) {
-            System.out.println("Local port number required at the command line.");
-            System.exit(1);
-        }
-        try {
-            sock = new ServerSocket(Integer.parseInt(args[0]));
-        } catch (IOException ex) {
-            System.out.println("Server failed to open local port " + args[0]);
-            System.exit(1);
-        }
-        while (running) {
-            cliSock = sock.accept();
-            HTTPRequest req = new HTTPRequest(cliSock, BASE_FOLDER);
-            req.start();
-        }
-    }
 
     // DATA ACCESSED BY THREADS - LOCKING REQUIRED
     /**

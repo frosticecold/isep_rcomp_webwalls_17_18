@@ -15,12 +15,12 @@ import client.udp.UDPClient;
 public class Client {
 
     /**
-     *  UDP Client
+     * UDP Client
      */
     public static UDPClient udp_client;
 
     /**
-     *  UDP Thread
+     * UDP Thread
      */
     public static Thread udp_thread;
 
@@ -47,6 +47,9 @@ public class Client {
      * @param ip IP
      */
     public void newConnection(final String ip) {
+        if (udp_thread != null) {
+            udp_thread.interrupt();
+        }
         udp_client = new UDPClient(ip);
         udp_thread = new Thread(udp_client);
         udp_thread.start();
@@ -78,7 +81,7 @@ public class Client {
             return;
         }
 
-        udp_client.sendWallMessageWithHeader(wallname,message);
+        udp_client.sendWallMessageWithHeader(wallname, message);
     }
 
     /**

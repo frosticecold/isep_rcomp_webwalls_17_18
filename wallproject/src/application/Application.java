@@ -12,6 +12,10 @@ import client.Client;
 import domain.WallManager;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,9 +26,7 @@ public class Application {
     public static volatile boolean running = true;
     public static Settings settings;
     public static HTTPServer http_server;
-    public static Thread http_thread;
     public static UDPServer udp_server;
-    public static Thread udp_thread;
 
     /**
      * Main method with a test wall named TestWall with a message.
@@ -33,7 +35,8 @@ public class Application {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.out.println("Error: no parameters.");
+            System.out.println("Error: arguments: server client");
+            System.exit(1);
         }
 
         WallManager.getInstance().findOrCreateWall("TestWall");
@@ -42,39 +45,52 @@ public class Application {
             settings = new Settings();
         } catch (IOException ex) {
             System.out.println("Error: couldn't load settings");
+            System.exit(1);
         }
         decide(args);
         Scanner scan = new Scanner(System.in);
+        Timer timer = new Timer("Timer thread");
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                long memInMB = (long) (mem * Math.pow(10, -6));
+                System.out.printf("Memory Usage: %d MB\n", memInMB);
+            }
+        }, 10000);
         while (running) {
-            System.out.printf("Please input a command<exit>>");
+            System.out.printf("Please input a command<exit>\n"
+                    + "$>");
             String command = scan.nextLine();
             if (command.matches("exit")) {
-                exit();
+                try {
+                    exit();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
 
     /**
      * Decide if is running a server or client
-     * 
+     *
      * @param args server or client
      */
     private static void decide(String[] args) {
 
         if (args.length == 0) {
-            System.out.println("Error: no arguments");
+            System.out.println("Error: use as arugments server client");
             System.exit(1);
         }
         if (args.length > 0) {
             if (args[0].compareToIgnoreCase("server") == 0) {
                 http_server = new HTTPServer();
-                http_thread = new Thread(http_server);
                 udp_server = new UDPServer();
-                udp_thread = new Thread(udp_server);
                 System.out.println("Running UDPServer thread on port: " + Settings.UDP_PORT);
                 System.out.println("Running HTTPServer thread on port: " + Settings.TCP_PORT);
-                http_thread.start();
-                udp_thread.start();
+                http_server.start();
+                udp_server.start();
             } else {
                 if (args.length >= 1) {
                     if (args[0].compareToIgnoreCase("client") == 0) {
@@ -91,11 +107,8 @@ public class Application {
     /**
      *
      */
-    public static void exit() {
+    public static void exit() throws InterruptedException {
         running = false;
-        udp_server.exit();
-        http_server.exit();
-        Client.udp_client.exit();
         System.exit(0);
     }
 

@@ -176,8 +176,12 @@ public class GUIClient extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void menuitem_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_exitActionPerformed
-        application.Application.exit();
-        this.dispose();
+        try {
+            application.Application.exit();
+            this.dispose();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GUIClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuitem_exitActionPerformed
 
     public void newConnection(final String ip) {
