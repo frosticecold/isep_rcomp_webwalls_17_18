@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package HTTP;
+package server.http;
 
-import domain.Wall;
-import domain.WallManager;
+import server.domain.Wall;
+import server.domain.WallManager;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,17 +23,17 @@ public class HTTPRequest extends Thread {
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HTTPRequest(Socket s, String f) {
+public HTTPRequest(Socket s, String f) {
         baseFolder = f;
         sock = s;
     }
-
+    
     /**
      * Method to obtain the wall
-     *
+     * 
      * @param request
      * @param response
-     * @throws IOException
+     * @throws IOException 
      */
     private void methodGet(HTTPmessage request, HTTPmessage response) throws IOException {
 
@@ -65,13 +65,14 @@ public class HTTPRequest extends Thread {
         }
         response.send(outS);
     }
-
+    
+    
     /**
      * Method to delete a wall
-     *
+     * 
      * @param request
      * @param response
-     * @throws IOException
+     * @throws IOException 
      */
     private void methodDelete(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/delete/")) {
@@ -104,13 +105,14 @@ public class HTTPRequest extends Thread {
         }
         response.send(outS);
     }
-
+    
+    
     /**
      * Method to post on the wall
-     *
+     * 
      * @param request
      * @param response
-     * @throws IOException
+     * @throws IOException 
      */
     private void methodPost(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("POST") && request.getURI().startsWith("/walls/")) {
@@ -134,10 +136,10 @@ public class HTTPRequest extends Thread {
         }
         response.send(outS);
     }
-
+    
     /**
      * Decision on what method is being used
-     *
+     * 
      */
     public void run() {
         try {

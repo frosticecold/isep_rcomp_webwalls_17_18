@@ -1,8 +1,8 @@
-package HTTP;
+package server.http;
 
 import application.Settings;
-import domain.Wall;
-import domain.WallManager;
+import server.domain.Wall;
+import server.domain.WallManager;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

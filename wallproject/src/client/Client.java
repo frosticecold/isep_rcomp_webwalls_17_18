@@ -5,8 +5,7 @@
  */
 package client;
 
-import UDP.Protocol;
-import client.udp.UDPClient;
+import server.udp.Protocol;
 
 /**
  *
