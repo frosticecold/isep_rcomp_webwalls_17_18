@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package HTTP;
+package server.http;
 
-import domain.Wall;
-import domain.WallManager;
+import server.domain.Wall;
+import server.domain.WallManager;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

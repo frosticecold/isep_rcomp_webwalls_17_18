@@ -6,10 +6,10 @@
 package application;
 
 import client.gui.GUIClient;
-import HTTP.HTTPServer;
-import UDP.UDPServer;
+import server.http.HTTPServer;
+import server.udp.UDPServer;
 import client.Client;
-import domain.WallManager;
+import server.domain.WallManager;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.Timer;

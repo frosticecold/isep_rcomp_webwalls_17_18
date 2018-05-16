@@ -5,7 +5,7 @@
  */
 package client.gui;
 
-import UDP.Protocol;
+import server.udp.Protocol;
 import client.Client;
 import java.util.logging.Level;
 import java.util.logging.Logger;

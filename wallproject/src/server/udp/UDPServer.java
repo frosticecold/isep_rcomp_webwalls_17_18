@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UDP;
+package server.udp;
 
 import application.Settings;
-import domain.WallManager;
+import server.domain.WallManager;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

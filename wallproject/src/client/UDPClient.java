@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.udp;
+package client;
 
-import UDP.Protocol;
+import server.udp.Protocol;
 import application.Settings;
 import client.gui.GUIClient;
 import java.io.IOException;
