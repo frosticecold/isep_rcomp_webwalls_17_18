@@ -8,9 +8,11 @@ package application;
 import client.gui.GUIClient;
 import HTTP.HTTPServer;
 import UDP.UDPServer;
-import client.Client;
 import domain.WallManager;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -91,6 +93,11 @@ public class Application {
                 System.out.println("Running HTTPServer thread on port: " + Settings.TCP_PORT);
                 http_server.start();
                 udp_server.start();
+                if(args.length > 1) {
+                    if (args[1].compareToIgnoreCase("browser") == 0) {
+                        openHomePage();
+                    }
+                }
             } else {
                 if (args.length >= 1) {
                     if (args[0].compareToIgnoreCase("client") == 0) {
@@ -106,10 +113,20 @@ public class Application {
 
     /**
      *
+     * @throws java.lang.InterruptedException
      */
     public static void exit() throws InterruptedException {
         running = false;
         System.exit(0);
+    }
+    
+    private static void openHomePage() {
+        try {
+            URI homepage = new URI("http://localhost:" + Settings.TCP_PORT + "/");
+            Desktop.getDesktop().browse(homepage);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
