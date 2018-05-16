@@ -79,10 +79,10 @@
 								<b></b>
 							</p>
 							<p />
-							<div style="clear:both" />
+							<div style="clear:both"></div>
 							</div>
 							<div name="wallselector">
-								<input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off"></input>
+								<input name="wallname" type="text" id="idwall" size="100" placeholder="Wall Name" autocomplete="off" title="Wall name to find/create"></input>
 								<a class="button" onclick="updateWall()">
 								<span>Find/Create Wall</span>
 								</a>
@@ -97,7 +97,7 @@
 								</script>
 							</div>
 							<div name="wallDelete">
-								<input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off"></input>
+								<input name="wallname" type="text" id="idDeleteWall" size="80" placeholder="Wall to Delete" autocomplete="off" title="Wall name to delete."></input>
 								<a class="button" onclick="deleteWall()">
 								<span>Delete Wall</span>
 								</a>
@@ -115,7 +115,7 @@
 								<output name="submitmsg" type="submit" id="wallcontent"></output>
 							</div>
 							<div name="message">
-								<input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off"> </input>
+								<input name="usermsg" type="text" id="usermsg" size="80" placeholder="Message" autocomplete="off" title="Message to be sent."> </input>
 								<a class="button" onclick="sendMessageToWall()">
 								<span>Send</span>
 								</a>
@@ -130,7 +130,7 @@
 								</script>
 							</div>
 							<div name="deleteMessageBlock">
-								<input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off"> </input>
+								<input name="messageNumber" type="text" id="msgid" size="80" autocomplete="off" title="Message number."> </input>
 								<a class="button" onclick="deleteMessageFromWall()">
 								<span>Delete</span>
 								</a>
