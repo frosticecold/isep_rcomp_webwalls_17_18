@@ -39,11 +39,14 @@ public HTTPRequest(Socket s, String f) {
 
         if (request.getURI().startsWith("/walls/")) {
             String uri[] = request.getURI().split("/");
-            if(uri.length>=2){
-            Wall wall = WallManager.getInstance().findOrCreateWall(uri[2]);
-            response.setContentFromWall(wall, "text/html");
-            response.setResponseStatus("200 Ok");
+            if (uri.length >= 2) {
+                Wall wall = WallManager.getInstance().findOrCreateWall(uri[2]);
+                response.setContentFromWall(wall, "text/html");
+                response.setResponseStatus("200 Ok");
             }
+        } else if (request.getURI().startsWith("/wallscounter/")) {
+            response.setContentFromString(String.valueOf(WallManager.getInstance().howManyWallsExist()), "text/html");
+            response.setResponseStatus("200 Ok");
         } else {
             String fullname = baseFolder + "/";
             if (request.getURI().equals("/")) {

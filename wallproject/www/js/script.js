@@ -4,6 +4,7 @@ var message, wall, wallcontent; // defined only after the document is loaded
 var msgNum;
 var delWall;
 var wallRefresh;
+var wallctr;
 
 function loadAndStart() {
   delWall = document.getElementById("idDeleteWall");
@@ -12,6 +13,7 @@ function loadAndStart() {
   msgNum = document.getElementById("msgid");
   wall = document.getElementById("idwall");
   wallcontent = document.getElementById("wallcontent");
+  wallctr = document.getElementById("wallcounter");
   setTimeout(updateWall, 1000);
 }
 
@@ -91,3 +93,13 @@ function deleteWall() {
   delWall.value = "";
 }
 
+function wallCounter() {
+	var request = new XMLHttpRequest();
+	request.open("GET", "/wallscounter/");
+	request.onload = function() {
+		wallctr.innerHTML = this.responseText;
+	}
+	request.send();
+	
+}
+	
