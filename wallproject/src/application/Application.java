@@ -57,7 +57,7 @@ public class Application {
                 long memInMB = (long) (mem * Math.pow(10, -6));
                 System.out.printf("Memory Usage: %d MB\n", memInMB);
             }
-        }, 10000);
+        },0, 15000);
         while (running) {
             System.out.printf("Please input a command<exit>\n"
                     + "$>");
