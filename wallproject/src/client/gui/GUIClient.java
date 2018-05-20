@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Raúl Correia <1090657@isep.ipp.pt>
+ * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class GUIClient extends javax.swing.JFrame {
 

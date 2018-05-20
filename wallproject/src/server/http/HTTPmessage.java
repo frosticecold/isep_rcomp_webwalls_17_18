@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Miguel Santos <1161386@isep.ipp.pt>
+ * @author Miguel Santos 1161386@isep.ipp.pt
  */
 public class HTTPmessage {
 

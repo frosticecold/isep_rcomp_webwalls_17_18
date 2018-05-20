@@ -9,7 +9,7 @@ import server.udp.Protocol;
 
 /**
  *
- * @author Raúl Correia <1090657@isep.ipp.pt>
+ * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class Client {
 

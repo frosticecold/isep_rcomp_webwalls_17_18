@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Raúl Correia <1090657@isep.ipp.pt>
+ * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class UDPClient implements Runnable {
 

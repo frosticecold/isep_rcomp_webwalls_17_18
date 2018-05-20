@@ -45,6 +45,7 @@ public class UDPServer extends Thread {
          * Buffer *
          */
         DatagramPacket udpPacket = new DatagramPacket(buffer, buffer.length);
+        byte zero = (byte)0;
         while (execute) {
             try {
                 /**
@@ -64,7 +65,7 @@ public class UDPServer extends Thread {
                 System.out.println("UDP Request from: "
                         + udpPacket.getAddress().getHostAddress() + " port: "
                         + udpPacket.getPort());
-                java.util.Arrays.fill(buffer, (byte)0);
+                java.util.Arrays.fill(buffer, zero);
             } catch (IOException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }

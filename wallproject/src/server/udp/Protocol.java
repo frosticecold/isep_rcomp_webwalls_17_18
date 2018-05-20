@@ -9,7 +9,7 @@ import java.net.DatagramPacket;
 
 /**
  *
- * @author Raúl Correia <1090657@isep.ipp.pt>
+ * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class Protocol {
 

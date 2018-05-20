@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Miguel Santos <1161386@isep.ipp.pt>
+ * @author Miguel Santos 1161386@isep.ipp.pt
  */
 public class HTTPServer extends Thread {
 
