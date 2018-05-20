@@ -75,8 +75,8 @@ public HTTPRequest(Socket s, String f) {
      * @throws IOException 
      */
     private void methodDelete(HTTPmessage request, HTTPmessage response) throws IOException {
-        if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/")) {
-            String uri[] = request.getURI().split("/");          
+        String uri[] = request.getURI().split("/");
+        if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/") && uri.length == 3) {
             String wallName = uri[2];
             boolean check = WallManager.getInstance().removeWallByName(wallName);
             System.out.println(wallName);
@@ -85,8 +85,7 @@ public HTTPRequest(Socket s, String f) {
                 response.setContentFromString("<html><body>alert(\"The wall has been deleted\")</body></html>", "text/html");
                 response.setResponseStatus("200 Ok");
             }
-        } else if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/")) {
-            String uri[] = request.getURI().split("/");
+        } else if (request.getMethod().equals("DELETE") && request.getURI().startsWith("/walls/") && uri.length > 3) {
             String wallname = uri[uri.length - 3];
             int messageNumber = Integer.parseInt(uri[uri.length - 1]);
 
