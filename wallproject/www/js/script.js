@@ -81,7 +81,7 @@ function deleteMessageFromWall() {
 
 function deleteWall() {
   var request = new XMLHttpRequest();
-  request.open("DELETE", "/walls/delete/" + delWall.value, true);
+  request.open("DELETE", "/walls/" + delWall.value, true);
   if (delWall.value !== "") {
     request.send();
     updateWall();
