@@ -8,7 +8,6 @@ package application;
 import client.gui.GUIClient;
 import server.http.HTTPServer;
 import server.udp.UDPServer;
-import client.Client;
 import java.awt.Desktop;
 import server.domain.WallManager;
 import java.io.IOException;
@@ -52,15 +51,6 @@ public class Application {
         }
         decide(args);
         Scanner scan = new Scanner(System.in);
-        Timer timer = new Timer("Timer thread");
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-                long memInMB = (long) (mem * Math.pow(10, -6));
-                System.out.printf("Memory Usage: %d MB\n", memInMB);
-            }
-        },0, 15000);
         while (running) {
             System.out.printf("Please input a command<exit>\n"
                     + "$>");
@@ -94,7 +84,17 @@ public class Application {
                 System.out.println("Running HTTPServer thread on port: " + Settings.TCP_PORT);
                 http_server.start();
                 udp_server.start();
-                if(args.length > 1) {
+                Timer timer = new Timer("Timer thread");
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                        long memInMB = (long) (mem * Math.pow(10, -6));
+                        System.out.printf("Memory Usage: %d MB\n", memInMB);
+                        System.out.printf("Number of Walls: %d\n", WallManager.getInstance().howManyWallsExist());
+                    }
+                }, 0, 15000);
+                if (args.length > 1) {
                     if (args[1].compareToIgnoreCase("browser") == 0) {
                         openHomePage();
                     }
@@ -120,7 +120,7 @@ public class Application {
         running = false;
         System.exit(0);
     }
-    
+
     private static void openHomePage() {
         try {
             URI homepage = new URI("http://localhost:" + Settings.TCP_PORT + "/");
