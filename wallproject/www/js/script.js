@@ -98,6 +98,7 @@ function wallCounter() {
 	request.open("GET", "/wallscounter/");
 	request.onload = function() {
 		wallctr.innerHTML = this.responseText;
+        setTimeout(wallCounter, 1000);
 	}
 	request.send();
 	
