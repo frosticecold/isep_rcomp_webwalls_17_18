@@ -23,17 +23,17 @@ public class HTTPRequest extends Thread {
     DataInputStream inS;
     DataOutputStream outS;
 
-public HTTPRequest(Socket s, String f) {
+    public HTTPRequest(Socket s, String f) {
         baseFolder = f;
         sock = s;
     }
-    
+
     /**
      * Method to obtain the wall
-     * 
+     *
      * @param request
      * @param response
-     * @throws IOException 
+     * @throws IOException
      */
     private void methodGet(HTTPmessage request, HTTPmessage response) throws IOException {
 
@@ -65,14 +65,13 @@ public HTTPRequest(Socket s, String f) {
         }
         response.send(outS);
     }
-    
-    
+
     /**
      * Method to delete a wall
-     * 
+     *
      * @param request
      * @param response
-     * @throws IOException 
+     * @throws IOException
      */
     private void methodDelete(HTTPmessage request, HTTPmessage response) throws IOException {
         String uri[] = request.getURI().split("/");
@@ -89,10 +88,12 @@ public HTTPRequest(Socket s, String f) {
             String wallname = uri[uri.length - 3];
             int messageNumber = Integer.parseInt(uri[uri.length - 1]);
 
-            Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
+            //Wall wall = WallManager.getInstance().findOrCreateWall(wallname);
             if (messageNumber > 0) {
-                wall.removeMessage(messageNumber);
-                response.setContentFromWall(wall, "text/html");
+                //wall.removeMessage(messageNumber);
+                WallManager.getInstance().removeMessageFromWall(wallname, messageNumber);
+                //response.setContentFromWall(wall, "text/html");
+                response.setContentFromString("<html><body>alert(\"The message has been deleted\")</body></html>", "test/html");
                 response.setResponseStatus("200 Ok");
             }
         } else {
@@ -103,14 +104,13 @@ public HTTPRequest(Socket s, String f) {
         }
         response.send(outS);
     }
-    
-    
+
     /**
      * Method to post on the wall
-     * 
+     *
      * @param request
      * @param response
-     * @throws IOException 
+     * @throws IOException
      */
     private void methodPost(HTTPmessage request, HTTPmessage response) throws IOException {
         if (request.getMethod().equals("POST") && request.getURI().startsWith("/walls/")) {
@@ -134,10 +134,10 @@ public HTTPRequest(Socket s, String f) {
         }
         response.send(outS);
     }
-    
+
     /**
      * Decision on what method is being used
-     * 
+     *
      */
     public void run() {
         try {
