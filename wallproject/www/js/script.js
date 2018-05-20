@@ -50,6 +50,8 @@ function updateWall() {
   // message number exists
   if (wall.value !== "") {
     request.send();
+  }else{
+      mArea.value = "";
   }
 
 
