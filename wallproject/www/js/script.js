@@ -89,7 +89,7 @@ function deleteWall() {
       wall.value="";
     }
   }
-
+    wall.value="";
   delWall.value = "";
 }
 
