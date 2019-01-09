@@ -8,18 +8,6 @@ Network and Java languages.
 
 ## Project Summary ##
 
-* Repo owner or admin
-
-* Other community or team contact
-
- * [Rui Ribeiro](1150344@isep.ipp.pt)
-
- * [Mário Dias](1151708@isep.ipp.pt)
-
- * [Miguel Santos](1161386@isep.ipp.pt)
-
-
-
 This project aims at implementing a walls service, each wall is a board
 
 where users can freely add plain text only messages. The project is
