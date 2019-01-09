@@ -2,11 +2,21 @@
 
 
 
-Network applications development in C and Java languages.
+Network and Java languages.
 
 
 
 ## Project Summary ##
+
+* Repo owner or admin
+
+* Other community or team contact
+
+ * [Rui Ribeiro](1150344@isep.ipp.pt)
+
+ * [Mário Dias](1151708@isep.ipp.pt)
+
+ * [Miguel Santos](1161386@isep.ipp.pt)
 
 
 
@@ -46,34 +56,10 @@ web frontend, JavaScript will also be required.
 
 
 
-### Building the wheel ###
-
- 
-
- * Summary of set up
-
- * Configuration
- 
- * How to run tests
-
- * Deployment instructions
-
-
-* Summary of set up
-
-* Configuration
-
-* Dependencies
-
-* Database configuration
-
-* How to run tests
-
-* Deployment instructions
 
 ### Contacts ###
 
-[André Oliveira](1040862@isep.ipp.pt)
+* [André Oliveira](1040862@isep.ipp.pt)
 
 * [Raúl Correia](1090657@isep.ipp.pt)
 
@@ -82,18 +68,6 @@ web frontend, JavaScript will also be required.
 * [Mário Dias](1151708@isep.ipp.pt)
 
 * [Miguel Santos](1161386@isep.ipp.pt)
-
-
-* Repo owner or admin
-
-* Other community or team contact
-
- * [Rui Ribeiro](1150344@isep.ipp.pt)
-
- * [Mário Dias](1151708@isep.ipp.pt)
-
- * [Miguel Santos](1161386@isep.ipp.pt)
-
 
 
 ### Assigned Ports ###
